@@ -20,7 +20,11 @@ class Projectplan extends ActiveRecord{
             ['begindate' , 'required'],
             ['enddate' , 'required'],
             ['yjsubmitdate' , 'required'],
-            ['chargeuserid' , 'required'],
+            ['pmid' , 'required'],
+            ['projectlevel' , 'required'],
+            ['workload' , 'required'],
+            ['customer' , 'required'],
+            
         ];
         /*return array(
             //必填校验
