@@ -4,10 +4,11 @@
 $(document).ready(function() {
 
     $('#calendar').fullCalendar({
+        lang:'zh-cn',//引入语言包
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,agendaWeek,agendaDay'
+            right: 'month'
         },
         defaultDate: '2016-05-12',
         selectable: true,
@@ -26,7 +27,7 @@ $(document).ready(function() {
             $('#calendar').fullCalendar('unselect');
         },
         editable: true,
-        eventLimit: true, // allow "more" link when too many events
+        //eventLimit: true, // allow "more" link when too many events
         events: [
             {
                 title: 'All Day Event',

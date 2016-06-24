@@ -20,4 +20,10 @@ class AppAsset extends AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
     ];
+
+    //根据需要导入js和css文件
+    public static function addMultipleSelect($view,$jsfile,$cssfile){
+        $view->registerJsFile($jsfile,[AppAsset::className(),'depends' => 'backend\assets\AppAsset']);
+        $view->registerCssFile($cssfile,[AppAsset::className(),'depends' => 'backend\assets\AppAsset']);
+    }
 }

@@ -18,7 +18,8 @@ class FullCalendarAsset extends AssetBundle{
     ];
     public $js = [
         'fullcalendar/moment.min.js',
-        'fullcalendar/fullcalendar.js'
+        'fullcalendar/fullcalendar.js',
+        'fullcalendar/lang-all.js'
     ];
     public $depends = [
         'backend\assets\AppAsset'
