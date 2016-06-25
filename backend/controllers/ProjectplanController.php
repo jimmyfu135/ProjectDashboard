@@ -7,6 +7,7 @@ use common\models\Projectplan;
 use yii;
 use common\models\User;
 use common\models\CommConfigData;
+use common\models\Careerdepartment;
 
 class ProjectplanController extends Controller{
     public function actionIndex()
@@ -37,6 +38,17 @@ class ProjectplanController extends Controller{
         $myCommConfigData=new CommConfigData();
         $projectlevel=$myCommConfigData->getProjectlevel();
         
+        /*
+         * 事业部
+         */
+        $arrCareerdepartment=[];
+        $Careerdepartment=new Careerdepartment();
+        $Careerdepartment=Careerdepartment::find()->all();
+        foreach ($Careerdepartment as $key=>$attr){
+            $value1=['id'=>$attr->getAttribute('id'),'name'=>$attr->getAttribute('name')];
+            array_push($arrCareerdepartment, $value1);
+        }
+        
         $from=yii::$app->getRequest()->getQueryParam('from');
        // $ispost= yii::$app->getRequest()->isPost();
         if($from=='modal'){
@@ -46,8 +58,8 @@ class ProjectplanController extends Controller{
             $enddate=yii::$app->getRequest()->getQueryParam('enddate');
             $model->setAttribute('begindate', $begindate);
             $model->setAttribute('enddate', $enddate);
-
-            return $this->renderAjax('addprojplan',[ 'model' => $model,'pmdata'=>$pmdata,'projectlevel'=>$projectlevel]);
+           
+            return $this->renderAjax('addprojplan',[ 'model' => $model,'pmdata'=>$pmdata,'projectlevel'=>$projectlevel,'careerdepart'=>$arrCareerdepartment]);
         }else if( $model->load(yii::$app->request->post()) ){
             //return $this->render('/projectplan/index');
             $model->validate();
@@ -80,6 +92,7 @@ class ProjectplanController extends Controller{
         }
         
     }
+    
     /*
      * 选择用户
      */
