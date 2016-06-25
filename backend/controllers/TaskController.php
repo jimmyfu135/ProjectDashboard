@@ -12,7 +12,7 @@ use common\models\CommConfigData;
 use Yii;
 
 
-class TaskController extends AdminController{
+class TaskController extends Controller{
 
 	public function actionIndex(){
 		$user = Task::find();
