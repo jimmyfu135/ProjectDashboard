@@ -1,6 +1,8 @@
 <?php
 use yii\widgets\Breadcrumbs;
+$this->registerCssFile('@web/css/public.css');
 ?>
+<div class="inner-container">
 <?=Breadcrumbs::widget([
     'homeLink' => ['label' => '首页'],
     'links' => [
@@ -8,4 +10,5 @@ use yii\widgets\Breadcrumbs;
         '指派任务'
     ]
 ])?>
-<?=$this->render('_form' , ['model' => $model, 'categorys' => $categorys]);?>
+</div>
+<?=$this->render('_form' , ['model' => $model, 'categorys' => $categorys,'taskstatus'=>$taskstatus]);?>

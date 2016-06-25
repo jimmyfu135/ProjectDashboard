@@ -16,4 +16,12 @@ class CommConfigData  {
             ['id'=>'3','name'=>'未签约先投入']
         ];
     }
+    public function getTaskStatus()
+    {
+        return [
+            ['id' => '1', 'name' => '未开始'],
+            ['id' => '2', 'name' => '处理中'],
+            ['id' => '3', 'name' => '已完成']
+        ];
+    }
 }

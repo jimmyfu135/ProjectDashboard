@@ -5,23 +5,24 @@ namespace backend\controllers;
 use yii\web\Controller;
 use common\models\Task;
 use common\models\User;
-use common\models\Projectplan;
 use yii\helpers\Html;
 use yii\data\Pagination;
+use common\models\CommConfigData;
 
 use Yii;
 
 
-class TaskController extends Controller{
+class TaskController extends AdminController{
 
 	public function actionIndex(){
-
 		$user = Task::find();
 		$pagination = new Pagination(['totalCount' => $user->count(), 'pageSize' => 5]);
 		$data = $user->offset($pagination->offset)->limit($pagination->limit)->all();
+		//获取任务状态
+		$myCommConfigData=new CommConfigData();
+		$taskStatus=$myCommConfigData->getTaskStatus();
 
-
-		return $this->render('index' , ['data' => $data, 'pagination' => $pagination , 'pagination' => $pagination, 'categorys' => Task::geAlltUser()]);
+		return $this->render('index' , ['data' => $data, 'pagination' => $pagination , 'pagination' => $pagination, 'categorys' => Task::geAlltUser(),'taskstatus'=>$taskStatus]);
 	}
 
 
@@ -35,7 +36,10 @@ class TaskController extends Controller{
 			Yii::$app->session->setFlash('success', '指派成功');
 			return $this->redirect(['index']);
 		}
-		return $this->render('add' , ['model' => $model,'categorys' => Task::getUser()]);
+		//获取任务状态
+		$myCommConfigData=new CommConfigData();
+		$taskStatus=$myCommConfigData->getTaskStatus();
+		return $this->render('add' , ['model' => $model,'categorys' => Task::getUser(),'taskstatus'=>$taskStatus]);
 	}
 
 
@@ -47,8 +51,10 @@ class TaskController extends Controller{
 				Yii::$app->session->setFlash('success', '修改成功');
 				return $this->redirect(['index']);
 			}
-
-			return $this->render('edit' , ['model' => $model,'categorys' => Task::getUser()]);
+			//获取任务状态
+			$myCommConfigData=new CommConfigData();
+			$taskStatus=$myCommConfigData->getTaskStatus();
+			return $this->render('edit' , ['model' => $model,'categorys' => Task::getUser(),'taskstatus'=>$taskStatus]);
 		}
 
 		return $this->redirect(['index']);	

@@ -2,22 +2,21 @@
 	use yii\helpers\Html;
      use frontend\models\User;
      use yii\helpers\ArrayHelper;
+    $this->registerCssFile('@web/css/public.css');
 ?>
-<style>
-.error{color:red;}
-</style>
+	<div class="inner-container">
 	<caption><h4>需求：<small><strong>阳光城面积管理</strong></small></h4></caption>
 <?=Html::beginForm('' , 'post', ['enctype' => 'multipart/form-data' ,'class' => 'form-horizontal']);?>
 	<div class="form-group">
 		<?=Html::label('人员：' , 'userid' , ['class' =>'control-label col-sm-2 col-md-2' ])?>
 		<div class="controls col-sm-10 col-md-4">
-			<?=Html::activeDropDownList($model, 'userid', ArrayHelper::map($categorys,'id', 'username'), ['class' => 'form-control'])?>
+			<?=Html::activeDropDownList($model, 'userid', ArrayHelper::map($categorys,'id', 'username'), ['prompt'=>'请选择','class' => 'form-control'])?>
 			<?=Html::error($model , 'userid' , ['class' => 'error']);?>
 		</div>
-		<?=Html::label('预计工作量：' , 'workload' , ['class' => 'control-label col-sm-2 col-md-2'])?>
+		<?=Html::label('岗位' , 'stationname', ['class' =>'control-label col-sm-2 col-md-2'])?>
 		<div class="controls col-sm-10 col-md-4">
-			<?=Html::activeInput('text' , $model , 'workload' , ['class' => 'form-control'])?>
-			<?=Html::error($model , 'workload' , ['class' => 'error']);?>
+			<?=Html::activeDropDownList($model,'stationname' ,['开发' => '开发', '测试' => '测试', '设计' => '设计', 'PM' => 'PM'],['prompt'=>'请选择','class' => 'form-control select'])?>
+			<?=Html::error($model , 'stationname', ['class' => 'error'])?>
 		</div>
 	</div>
 	<div class="form-group">
@@ -32,6 +31,18 @@
 			<?=Html::error($model , 'enddate', ['class' => 'error'])?>
 		</div>
 	</div>
+	<div class="form-group">
+		<?=Html::label('工作量：' , 'workload' , ['class' => 'control-label col-sm-2 col-md-2'])?>
+		<div class="controls col-sm-10 col-md-4">
+			<?=Html::activeInput('text' , $model , 'workload' , ['class' => 'form-control'])?>
+			<?=Html::error($model , 'workload' , ['class' => 'error']);?>
+		</div>
+		<?=Html::label('任务状态' , 'taskstatus', ['class' =>'control-label col-sm-2 col-md-2'])?>
+		<div class="controls col-sm-10 col-md-4">
+			<?=Html::activeDropDownList($model,'taskstatus' ,ArrayHelper::map($taskstatus,'id', 'name'), ['prompt'=>'请选择','class' => 'form-control select'])?>
+			<?=Html::error($model , 'taskstatus', ['class' => 'error'])?>
+		</div>
+	</div>
 
 <div class="form-group">
 	<?=Html::submitButton("确认" , ['class' => 'btn btn-primary col-sm-offset-2']);?>
@@ -39,3 +50,4 @@
 </div>
 
 <?=Html::endForm();?>
+	</div>

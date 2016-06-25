@@ -1,0 +1,11 @@
+body {
+    background: #07415f none repeat scroll 0 0;
+    height: 100%;
+    width: 100%;
+}
+.inner-container{
+    font-family:Microsoft YaHei
+}
+.error{
+    color:red;font-family:Microsoft YaHei
+}

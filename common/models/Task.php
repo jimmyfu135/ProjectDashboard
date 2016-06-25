@@ -4,6 +4,7 @@ namespace common\models;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
+
 class Task extends ActiveRecord{
 
 	public static function tableName(){
@@ -12,12 +13,14 @@ class Task extends ActiveRecord{
 
 	public function rules(){
 		return [
-			['userid' , 'integer', 'min' => 1, 'message' => '请选择人员', 'tooSmall' => '请选择人员'],
+			['userid' , 'required','message' => '请选择人员'],
 			['begindate' , 'required', 'message' => '开始日期不能为空'],
 			['enddate' , 'required', 'message' => '结束日期不能为空'],
 			//[['begindate', 'enddate'], 'date', 'message' => '日期格式不合法'],
 			['workload' , 'number', 'min' => 0, 'message' => '请录入数值', 'tooSmall' => '请录入大于0的数值'],
 			['workload' , 'required','message' => '请录入工作量'],
+			['taskstatus' , 'required','message' => '请选择任务状态'],
+			['stationname' , 'required','message' => '请选择岗位'],
 		];
 	}
 
@@ -27,8 +30,10 @@ class Task extends ActiveRecord{
 	{
 		if (parent::beforeSave($insert)) {
 			$time = time();
-			if ($this->isNewRecord) $this->date = $time;
-			$this->update_date = $time;
+			if ($this->isNewRecord) $this->created_at = $time;
+			$this->updated_at = $time;
+			//$newDate = DateTime::createFromFormat('d-m-Y', $this->begindate);
+			//$this->begindate = $newDate->format('d-m-Y');
 			return true;
 		}
 		return false;
