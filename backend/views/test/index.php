@@ -7,21 +7,10 @@
  */
 /* @var $this yii\web\View */
 
-$this->registerJsFile('@web/js/site.js',['depends' => ['backend\assets\TestAsset']]);
+//1、要使用以下方法 registerJsFile，需要用beginPage、beginBody
+//$this->registerJsFile('@web/js/site.js',['depends' => ['backend\assets\TestAsset']]);
+
+//2、
 ?>
-<?php $this->beginPage() ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php $this->head() ?>
-</head>
-<body>
-<?php $this->beginBody() ?>
-<div id='calendar'></div>
-<?php $this->endBody() ?>
-</body>
-</html>
-<?php $this->endPage() ?>
+
+sfsfsdfsdf

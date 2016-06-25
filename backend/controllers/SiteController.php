@@ -2,10 +2,12 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\Projectplan;
 
 /**
  * Site controller
@@ -14,6 +16,7 @@ class SiteController extends Controller
 {
     /**
      * @inheritdoc
+     * 这里还会配置允许访问的路由规则！！！！！！！！！！！！！！！！！！
      */
     public function behaviors()
     {
@@ -29,6 +32,10 @@ class SiteController extends Controller
                         'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['calendar-list', 'error'],
+                        'allow' => true,
                     ],
                 ],
             ],
@@ -79,5 +86,21 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    //返回日志表的数据
+    public  function actionCalendarList(){
+        /*$calendarList = [
+            [
+            'title' =>  'All Day Event',
+            'start' =>  '2016-05-01'
+            ],
+            [
+                'title' =>  'sdfsdf',
+                'start' =>  '2016-06-01'
+            ],
+        ];*/
+        $calendarList = Projectplan::calendarList();
+        echo Json::encode($calendarList);
     }
 }

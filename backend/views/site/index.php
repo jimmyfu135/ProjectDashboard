@@ -2,11 +2,12 @@
 
 /* @var $this yii\web\View */
 use backend\assets\AppAsset;
-
+use yii\bootstrap\Modal;
 //FullCalendarAsset::register($this);
 
 $this->registerJsFile('@web/js/site.js',['depends' => ['backend\assets\FullCalendarAsset']]);
 AppAsset::addMultipleSelect($this,'@web/js/multiplescript.js','@web/css/multipleselect.css');
+$this->registerJsFile('@web/js/projectplan.js',['depends' => ['backend\assets\AppAsset']]);
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
@@ -42,3 +43,15 @@ $this->title = 'My Yii Application';
         </div>
     </div>
 </div>
+
+<?php
+Modal::begin([
+    'id' => 'create-modal',
+    'header' => '<h4 class="modal-title">新增项目计划</h4>',
+    'size' => 'modal-lg'
+])
+// 'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>',
+;
+
+Modal::end();
+?>
