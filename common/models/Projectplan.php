@@ -32,6 +32,7 @@ class Projectplan extends ActiveRecord{
             ['projectlevel' , 'required'],
             ['workload' , 'required'],
             ['customer' , 'required'],
+            ['careerdepartid' , 'required'],
             
         ];
         /*return array(
