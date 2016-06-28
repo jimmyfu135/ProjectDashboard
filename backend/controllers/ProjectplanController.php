@@ -50,12 +50,13 @@ class ProjectplanController extends Controller
             // 如果是修改的话
             $projplanid = yii::$app->getRequest()->getQueryParam('id');
             if ($projplanid == NULL) {
+                // 新增
                 // 传递过来的开始时间和结束时间
                 $begindate = yii::$app->getRequest()->getQueryParam('begindate');
                 $enddate = yii::$app->getRequest()->getQueryParam('enddate');
                 $model->setAttribute('begindate', $begindate);
                 $model->setAttribute('enddate', $enddate);
-
+                
                 return $this->renderAjax('addprojplan', [
                     'model' => $model,
                     'pmdata' => $pmdata,
@@ -63,8 +64,10 @@ class ProjectplanController extends Controller
                     'careerdepart' => $Careerdepartment
                 ]);
             } else {
-                $model = Projectplan::findOne(['id'=>$projplanid]);
-                
+                // 修改
+                $model = Projectplan::findOne([
+                    'id' => $projplanid
+                ]);
                 return $this->renderAjax('editprojplan', [
                     'model' => $model,
                     'pmdata' => $pmdata,
@@ -73,11 +76,14 @@ class ProjectplanController extends Controller
                 ]);
             }
         } else 
+            // 新增
             if ($model->load(yii::$app->request->post())) {
                 // return $this->render('/projectplan/index');
                 $model->validate();
-
-                $model->setAttribute('pmname', User::findOne(['id'=>$model->pmid])->usernameChn);
+                
+                $model->setAttribute('pmname', User::findOne([
+                    'id' => $model->pmid
+                ])->usernameChn);
                 
                 // 设置当前操纵用户的信息
                 $userid = yii::$app->user->id;
@@ -101,23 +107,35 @@ class ProjectplanController extends Controller
                 // echo $model->begindate;
                 return $this->redirect('index.php');
             }
-       
     }
-    
-    public function actionUpdateprojplan(){
-        $model = new Projectplan();
-        if ($model->load(yii::$app->request->post())) {
-            $model->update();
-            Url::to(['index']);
-        }
-    }
-    
-    public function actionDelprojplan(){
-        $id=Yii::$app->getRequest()->getQueryParam('id');
-       
-        Projectplan::deleteAll(['id'=>$id]);
+
+    public function actionUpdateprojplan()
+    {
+        $projplanid = yii::$app->getRequest()->getQueryParam('id');
         
-        Url::to(['index']);
+        $model = new Projectplan();
+        
+        if ($projplanid != NULL && ($model = Projectplan::findOne($projplanid))) {
+            
+            if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $model->save()) {
+                
+                return $this->redirect('index.php');
+            }
+        }
+        
+        // return $this->redirect(['index']);
+    }
+
+    public function actionDelprojplan()
+    {
+        $id = Yii::$app->getRequest()->getQueryParam('id');
+        echo $id;
+        if ($id != NULL && $model = Projectplan::findOne($id)) {
+            var_dump($model);
+            $model->delete();
+            
+            return $this->redirect('index.php');
+        }
     }
     
     /*
