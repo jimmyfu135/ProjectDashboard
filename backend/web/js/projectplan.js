@@ -3,9 +3,6 @@
  */
 function showProjModal(bgnDate, enddate) {
 
-	editProjPlan('34');
-	return ;
-	
 	$.get("index.php?r=projectplan/addprojplan&from=modal&begindate=" + bgnDate
 			+ "&enddate=" + enddate, {}, function(data) {
 		$('.modal-body').html(data);
