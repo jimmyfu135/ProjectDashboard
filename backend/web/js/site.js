@@ -80,17 +80,7 @@ $(document).ready(function() {
         select: function(start, end) {
             var formatStart = start.format();
             var formatEnd = end.format();
-            var title = showProjModal(formatStart,formatEnd);
-            var eventData;
-            if (title) {
-                eventData = {
-                    title: title,
-                    start: start,
-                    end: end
-                };
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-            }
-            $('#calendar').fullCalendar('unselect');
+            addTaskModal(formatStart,formatEnd);
         },
         eventClick:function (calEvent,jsEvent,view) {
             alert('编辑接口');

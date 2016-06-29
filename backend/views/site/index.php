@@ -8,6 +8,7 @@ use yii\bootstrap\Modal;
 $this->registerJsFile('@web/js/site.js',['depends' => ['backend\assets\FullCalendarAsset']]);
 AppAsset::addMultipleSelect($this,'@web/js/multiplescript.js','@web/css/multipleselect.css');
 $this->registerJsFile('@web/js/projectplan.js',['depends' => ['backend\assets\AppAsset']]);
+$this->registerJsFile('@web/js/taskproject.js',['depends' => ['backend\assets\AppAsset']]);
 $this->title = 'My Yii Application';
 ?>
 
@@ -45,9 +46,6 @@ Modal::begin([
     'id' => 'create-modal',
     'header' => '<h4 class="modal-title">新增项目计划</h4>',
     'size' => 'modal-lg'
-])
-// 'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>',
-;
-
+]);
 Modal::end();
 ?>
