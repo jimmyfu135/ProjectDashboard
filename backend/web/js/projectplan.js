@@ -2,6 +2,7 @@
  * 新增项目计划
  */
 function showProjModal(bgnDate, enddate) {
+	
 	$(".modal-title").text("新增项目计划");
 	$.get("index.php?r=projectplan/addprojplan&from=modal&begindate=" + bgnDate
 			+ "&enddate=" + enddate, {}, function(data) {
@@ -54,4 +55,26 @@ function submitEditProjPlan(id){
 function submitDelProjPlan(id){
 	var $form = $('#addForm');
 	submitProjPlan('index.php?r=projectplan/delprojplan&id='+id, $form.serialize());
+}
+
+//选择事业部，默认带出事业部下面的用户
+function changecareerdepart(){
+	var scareerdepartid=$("#projectplan-careerdepartid").val();
+	$.ajax({
+        url: 'index.php?r=projectplan/ajaxgetcareeruser&careerdepartid='+scareerdepartid,
+        type: 'get',
+        data: scareerdepartid,
+        success: function (data) {
+        	var arrUser= JSON.parse(data);
+        	$("#projectplan-chargeuserid").empty()
+        	for (var i = 0; i < arrUser.length; i++) {
+                $('#projectplan-chargeuserid').append("<option value=" + arrUser[i].id + ">" + arrUser[i].usernameChn + "</option>");
+            }
+        }
+    });
+}
+
+//指派任务
+function submitSendTask(id){
+	alert(id);
 }

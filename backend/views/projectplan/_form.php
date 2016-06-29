@@ -6,6 +6,7 @@ use dosamigos\datepicker\DatePicker;
 use yii\base\Widget;
 
 $this->registerCssFile('@web/css/modal-self.css');
+$this->registerJsFile('@web/js/projectplanform.js');
 ?>
 
 <div class="form-group">
@@ -23,7 +24,7 @@ $this->registerCssFile('@web/css/modal-self.css');
     </div>
     <?=Html::label('需求PM' , 'pmid', ['class' =>'control-label col-sm-2 col-md-2'])?>
     <div class="controls col-sm-10 col-md-4">
-        <?=Html::activeDropDownList($model,'pmid' ,ArrayHelper::map($pmdata,'id', 'usernameChn'), ['class' => 'form-control select'])?>
+        <?=Html::activeDropDownList($model,'pmid' ,ArrayHelper::map($pmdata,'id', 'usernameChn'), ['prompt'=>'请选择','class' => 'form-control select'])?>
         <?=Html::error($model , 'pmid', ['class' => 'error'])?>
     </div>
 </div>
@@ -47,7 +48,7 @@ $this->registerCssFile('@web/css/modal-self.css');
     </div>
     <?=Html::label('需求级别' , 'projectlevel', ['class' =>'control-label col-sm-2 col-md-2'])?>
     <div class="controls col-sm-10 col-md-4">
-        <?=Html::activeDropDownList($model,'projectlevel' ,ArrayHelper::map($projectlevel,'id', 'name'), ['class' => 'form-control select'])?>
+        <?=Html::activeDropDownList($model,'projectlevel' ,ArrayHelper::map($projectlevel,'id', 'name'), ['prompt'=>'请选择','class' => 'form-control select'])?>
         <?=Html::error($model , 'projectlevel', ['class' => 'error'])?>
     </div>
 </div>
@@ -67,7 +68,12 @@ $this->registerCssFile('@web/css/modal-self.css');
  <div class="form-group">
     <?=Html::label('责任事业部' , 'careerdepartid', ['class' =>'control-label col-sm-2 col-md-2'])?>
     <div class="controls col-sm-10 col-md-4">
-        <?=Html::activeDropDownList($model,'careerdepartid' ,ArrayHelper::map($careerdepart,'id', 'name'), ['class' => 'form-control select'])?>
+        <?=Html::activeDropDownList($model,'careerdepartid' ,ArrayHelper::map($careerdepart,'id', 'name'), ['prompt'=>'请选择','class' => 'form-control select','onchange'=>'changecareerdepart()'])?>
         <?=Html::error($model , 'careerdepartid', ['class' => 'error'])?>
+    </div>
+    <?=Html::label('需求负责人' , 'chargeuserid', ['class' =>'control-label col-sm-2 col-md-2'])?>
+     <div class="controls col-sm-10 col-md-4">
+        <?=Html::activeDropDownList($model,'chargeuserid' ,ArrayHelper::map($arrchargeuserid,'id', 'name'), ['prompt'=>'请选择','class' => 'form-control select'])?>
+        <?=Html::error($model , 'chargeuserid', ['class' => 'error'])?>
     </div>
 </div>

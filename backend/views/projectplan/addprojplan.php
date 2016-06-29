@@ -13,7 +13,7 @@ $this->registerJsFile('@web/js/addprojplan.js',['depends' => ['backend\assets\Ap
 <div class="inner-container">
 	<?=Html::beginForm('' , 'post' , ['enctype' => 'multipart/form-data' , 'class' => 'form-horizontal' , 'id' =>'addForm' ])?>
 
-	<?= $this->render('_form' , [ 'model' => $model,'pmdata'=>$pmdata,'projectlevel'=>$projectlevel,'careerdepart'=>$careerdepart]); ?>
+	<?= $this->render('_form' , [ 'model' => $model,'pmdata'=>$pmdata,'projectlevel'=>$projectlevel,'careerdepart'=>$careerdepart,'arrchargeuserid'=>$arrchargeuserid]); ?>
 
 	<div class="form-group">
 		<div style="margin-top:10px" class="col-sm-10 col-sm-offset-10 ">
