@@ -83,7 +83,7 @@ $(document).ready(function() {
             addTaskModal(formatStart,formatEnd);
         },
         eventClick:function (calEvent,jsEvent,view) {
-            alert('编辑接口');
+            editTaskModal(calEvent.id);
         }
     });
 

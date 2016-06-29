@@ -8,7 +8,7 @@
 <div class="form-group">
 			<?=Html::label('任务名称' , 'subject' , ['class' =>'control-label col-sm-2 col-md-2'])?>
 			<div class="controls col-sm-10 col-md-10">
-				<?=Html::activeInput('text' , $modelTask , 'subject' , ['class' => 'form-control input'])?>
+				<?=Html::activeInput('text' , $modelTask, 'subject' , ['class' => 'form-control input'])?>
 				<?=Html::error($modelTask , 'subject', ['class' => 'error'])?>
 			</div>
 		</div>

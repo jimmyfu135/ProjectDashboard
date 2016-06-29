@@ -60,33 +60,62 @@ class TaskprojectController extends Controller{
 	}
 
 
-	public function actionEdit($id){
-		$id = (int)$id;
-		if($id > 0 && ($model = Task::findOne($id))){
-			if(Yii::$app->request->isPost && $model -> load(Yii::$app->request->post()) && $model->save()){
-				return $this->redirect(['index']);
+	public function actionEdittaskproj()
+	{
+		// 如果是修改的话
+		$id = yii::$app->getRequest()->getQueryParam('id');
+		$model = Task::findOne($id);
+		$modelTask = Taskproject::findOne($model->taskid);
+		$model->begindate=substr($model->begindate,0,10);
+		$model->enddate=substr($model->enddate, 0,10);
+		$myCommConfigData = new CommConfigData();
+		$taskStatus = $myCommConfigData->getTaskStatus();
+		//新增保存
+		if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $modelTask->load(Yii::$app->request->post()) && yii::$app->request->isAjax) {
+			$modelTask->begindate = $model->begindate;
+			$modelTask->enddate = $model->enddate;
+			$modelTask->taskstatus = $model->taskstatus;
+			$modelTask->workload = $model->workload;
+			//事务
+			$transaction = \Yii::$app->db->beginTransaction();
+			//主从表保存
+			if ($modelTask->save()) {
+				$model->taskid = $modelTask->id;
+				if (!$model->save()) {
+					$transaction->rollback();
+					return $this->renderAjax('edit', ['model' => $model, 'categorys' => Task::getUser(), 'modelTask' => $modelTask, 'taskstatus' => $taskStatus]);
+				} else {
+					$transaction->commit();
+					return 'ok';
+				}
+			} else {
+				$transaction->rollback();
+				return $this->renderAjax('edit', ['model' => $model, 'categorys' => Task::getUser(), 'modelTask' => $modelTask, 'taskstatus' => $taskStatus]);
 			}
-			//获取任务状态
-			$myCommConfigData=new CommConfigData();
-			$taskStatus=$myCommConfigData->getTaskStatus();
-			return $this->render('edit' , ['model' => $model,'categorys' => Task::getUser(),'taskstatus'=>$taskStatus]);
 		}
-
-		return $this->redirect(['index']);	
+		return $this->renderAjax('edit', ['model' => $model, 'categorys' => Task::getUser(), 'modelTask' => $modelTask, 'taskstatus' => $taskStatus]);
 	}
 
-
-	public function actionDelete($id)
+//删除
+	public function actionDeltaskproj()
 	{
-		$id = (int)$id;
-		if ($id > 0) {
-			if (Task::findOne($id)->delete()) {
-				Yii::$app->session->setFlash('success', '删除成功');
+		$id = yii::$app->getRequest()->getQueryParam('id');
+		$model = Task::findOne($id);
+		$taskid = $model->taskid;
+		$taskmodel = Task::find()->where(['taskid' => $taskid]);
+		if ($taskmodel->count() == 1) {
+			//事务
+			$transaction = \Yii::$app->db->beginTransaction();
+			//删除主记录
+			if (Taskproject::findOne($taskid)->delete() && Task::findOne($id)->delete()) {
+				$transaction->commit();
 			} else {
-				Yii::$app->session->setFlash('error', '删除失败');
+				$transaction->rollback();
 			}
+			return 'ok';
 		}
-		return $this->redirect(['index']);
+		Task::findOne($id)->delete();
+		return 'ok';
 	}
 
     //任务指派

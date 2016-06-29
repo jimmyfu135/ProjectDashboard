@@ -6,7 +6,7 @@ $this->registerCssFile('@web/css/public.css');
 <?=Breadcrumbs::widget([
     'homeLink' => ['label' => '首页'],
     'links' => [
-        ['label' => '任务分配列表' , 'url' => ['index']],
+        ['label' => '任务分配列表'],
         '指派调整'
     ]
 ])?>

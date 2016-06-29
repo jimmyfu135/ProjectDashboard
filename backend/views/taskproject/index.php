@@ -14,7 +14,8 @@ $this->registerJsFile('js/taskproject.js');
 		'新增任务',
 	]
 ])?>
-	<a class="btn btn-success" id='newproj' href="javascript:showProjModal('2016-06-05','2016-06-10')" >新增任务</a>
+	<a class="btn btn-success" id='newproj' href="javascript:addTaskModal('2016-06-05','2016-06-10')" >新增任务</a>
+	<a class="btn btn-success" id='newproj' href="javascript:editTaskModal(42)" >修改任务</a>
 
 	<p style="text-align:right;">
 		<a href="<?=Url::to(['taskproject/assignedtask','id'=>44])?>" class="btn btn-primary">指派任务(高普林调用)</a>

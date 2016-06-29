@@ -8,14 +8,9 @@
 	.inner-container{font-family:Microsoft YaHei}
 </style>
 <div class="inner-container">
-<?=Breadcrumbs::widget([
-	'homeLink' => ['label' => '首页'],
-	'links' => [
-		'任务分配列表',
-	]
-])?>
 <p style="text-align:right;">
 	<a href="<?=Url::to(['add','taskid'=>$modelTask->id])?>" class="btn btn-primary">指派任务</a>
+	<a href="<?=Url::to(['site/index'])?>" class="btn btn-primary">返回首页</a>
 </p>
 <table class="table table-hover">
 	<caption><h4>需求：<small><strong><?=$modelTask->subject?></strong></small></h4></caption>
