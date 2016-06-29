@@ -1,5 +1,5 @@
 /* select */
-.select{padding:5px 10px;border:#ddd 1px solid;border-radius:4px;width:100%;margin:5% auto;font-size:12px}
+.select{padding:5px 10px;border:#ddd 1px solid;border-radius:4px;width:100%;margin-top: 5px;font-size:12px}
 .select li{list-style:none;padding:10px 0 5px 100px}
 .select .select-list{border-bottom:#eee 1px dashed}
 .select dl{zoom:1;position:relative;line-height:24px;}
