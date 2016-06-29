@@ -141,6 +141,15 @@ class ProjectplanController extends Controller
         
         if ($model->load(yii::$app->request->post()) && yii::$app->request->isAjax) {
             // return $this->render('/projectplan/index');
+            $careerdepartid = $model->careerdepartid;
+            $careeruser=new User;
+            if($careerdepartid!=NULL){
+                //$taskproject=Taskproject::find()->where(['planid'=>$id])->one();;
+                $sql = 'select usernameChn,id from user where careerdepartmentid = :careerdepartmentid';
+                $careeruser= User::findBySql($sql)->addParams([':careerdepartmentid' => $careerdepartid])->asArray()->all();
+            }else{
+                $careeruser=[];
+            }
             if($model->validate()){
                
                 // 设置当前操纵用户的信息
@@ -165,7 +174,7 @@ class ProjectplanController extends Controller
                         'pmdata' => $pmdata,
                         'projectlevel' => $projectlevel,
                         'careerdepart' => $careerdepart,
-                        'arrchargeuserid'=>[]
+                        'arrchargeuserid'=>$careeruser
                     ]);
             }
         }
@@ -203,7 +212,15 @@ class ProjectplanController extends Controller
         
         
         if ($projplanid != NULL && ($model = Projectplan::findOne($projplanid)) && $model->load(yii::$app->request->post()) && yii::$app->request->isAjax) {
-
+            $careerdepartid = $model->careerdepartid;
+            $careeruser=new User;
+            if($careerdepartid!=NULL){
+                //$taskproject=Taskproject::find()->where(['planid'=>$id])->one();;
+                $sql = 'select usernameChn,id from user where careerdepartmentid = :careerdepartmentid';
+                $careeruser= User::findBySql($sql)->addParams([':careerdepartmentid' => $careerdepartid])->asArray()->all();
+            }else{
+                $careeruser=[];
+            }
             if($model->validate()){
                 
                 $model->save();
@@ -213,7 +230,8 @@ class ProjectplanController extends Controller
                     'model' => $model,
                     'pmdata' => $pmdata,
                     'projectlevel' => $projectlevel,
-                    'careerdepart' => $careerdepart
+                    'careerdepart' => $careerdepart,
+                    'careeruser'=>$careeruser
                 ]);
             }
         }

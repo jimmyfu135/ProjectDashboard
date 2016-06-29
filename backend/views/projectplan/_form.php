@@ -73,7 +73,7 @@ $this->registerJsFile('@web/js/projectplanform.js');
     </div>
     <?=Html::label('需求负责人' , 'chargeuserid', ['class' =>'control-label col-sm-2 col-md-2'])?>
      <div class="controls col-sm-10 col-md-4">
-        <?=Html::activeDropDownList($model,'chargeuserid' ,ArrayHelper::map($arrchargeuserid,'id', 'name'), ['prompt'=>'请选择','class' => 'form-control select'])?>
+        <?=Html::activeDropDownList($model,'chargeuserid' ,ArrayHelper::map($arrchargeuserid,'id', 'usernameChn'), ['prompt'=>'请选择','class' => 'form-control select'])?>
         <?=Html::error($model , 'chargeuserid', ['class' => 'error'])?>
     </div>
 </div>

@@ -35,6 +35,7 @@ function submitProjPlan(url,data){
             	$('#requirementCalendar').fullCalendar('refetchEvents');
             }else{
             	$('.modal-body').html(data);
+            	changeload();
             }
         }
     });
@@ -66,7 +67,8 @@ function changecareerdepart(){
         data: scareerdepartid,
         success: function (data) {
         	var arrUser= JSON.parse(data);
-        	$("#projectplan-chargeuserid").empty()
+        	$("#projectplan-chargeuserid").empty();
+        	 $('#projectplan-chargeuserid').append("<option value=''>请选择</option>");
         	for (var i = 0; i < arrUser.length; i++) {
                 $('#projectplan-chargeuserid').append("<option value=" + arrUser[i].id + ">" + arrUser[i].usernameChn + "</option>");
             }
