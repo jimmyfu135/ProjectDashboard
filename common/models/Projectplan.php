@@ -60,7 +60,7 @@ class Projectplan extends ActiveRecord{
 
     public static function requirementCalendarList($departName){
         //return Projectplan::find()->all();
-        $sql = 'select `subject` as `title`, date_format(`begindate`,\'%Y-%m-%d\') as `start`,date_format(`enddate`,\'%Y-%m-%d\') as `end` from v_projectplan where departname = :departname';
+        $sql = 'select id,`subject` as `title`, date_format(`begindate`,\'%Y-%m-%d\') as `start`,date_format(`enddate`,\'%Y-%m-%d\') as `end` from v_projectplan where departname = :departname';
         return Projectplan::findBySql($sql)->addParams([':departname' => $departName])->asArray()->all();
     }
 }

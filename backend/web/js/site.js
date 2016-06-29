@@ -42,7 +42,7 @@ $(document).ready(function() {
             //$('#calendar').fullCalendar('unselect');
         },
         eventClick:function (calEvent,jsEvent,view) {
-            alert('编辑接口');
+            editProjPlan(calEvent.id);
         }        
     });
 
