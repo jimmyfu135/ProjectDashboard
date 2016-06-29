@@ -25,14 +25,14 @@ class Projectplan extends ActiveRecord{
     {
         return [
             ['subject' , 'required' ,'message'=>'主题不允许为空'],
-            ['begindate' , 'required'],
-            ['enddate' , 'required'],
-            ['yjsubmitdate' , 'required'],
-            ['pmid' , 'required'],
-            ['projectlevel' , 'required'],
-            ['workload' , 'required'],
-            ['customer' , 'required'],
-            ['careerdepartid' , 'required'],
+            ['begindate' , 'required' ,'message'=>'计划开始时间不允许为空'],
+            ['enddate' , 'required' ,'message'=>'计划结束时间不允许为空'],
+            ['yjsubmitdate' , 'required' ,'message'=>'预计提交时间不允许为空'],
+            ['pmid' , 'required' ,'message'=>'需求PM不允许为空'],
+            ['projectlevel' , 'required' ,'message'=>'需求级别不允许为空'],
+            ['workload' , 'required' ,'message'=>'预计工作量不允许为空'],
+            ['customer' , 'required' ,'message'=>'客户名称不允许为空'],
+            ['careerdepartid' , 'required' ,'message'=>'责任事业部不允许为空'],
             
         ];
         /*return array(
