@@ -16,11 +16,104 @@ class ProjectplanController extends Controller
     {
         return $this->render('index');
     }
-
+   
+    /*
+     * 只用于首次打开，如新增、修改打开界面，从后端提取界面展示数据
+     */
     public function actionAddprojplan()
     {
         $model = new Projectplan();
         
+        /*
+         * 从数据库动态获取PM的名称和id
+         *
+         */
+        $pmdata = new User();
+        // 找出所有PM，拼成数组
+        $pmdata = User::findAll([
+            'stationid' => '2'
+        ]);
+        
+        
+        /*
+         * 固定需求级别
+         */
+        $myCommConfigData = new CommConfigData();
+        $projectlevel = $myCommConfigData->getProjectlevel();
+        
+        /*
+         * 事业部
+         */
+        $careerdepart = new Careerdepartment();
+        $careerdepart = Careerdepartment::find()->all();
+
+        $from = yii::$app->getRequest()->getQueryParam('from');
+        // $ispost= yii::$app->getRequest()->isPost();
+        if ($from == 'modal') {
+            // 如果是修改的话
+            $projplanid = yii::$app->getRequest()->getQueryParam('id');
+            if ($projplanid == NULL) {
+                // 新增
+                // 传递过来的开始时间和结束时间
+                $begindate = yii::$app->getRequest()->getQueryParam('begindate');
+                $enddate = yii::$app->getRequest()->getQueryParam('enddate');
+                $model->setAttribute('begindate', $begindate);
+                $model->setAttribute('enddate', $enddate);
+                
+                
+                return $this->renderAjax('addprojplan', [
+                    'model' => $model,
+                    'pmdata' => $pmdata,
+                    'projectlevel' => $projectlevel,
+                    'careerdepart' => $careerdepart
+                ]);
+            } else {
+                // 修改
+                $model = Projectplan::findOne([
+                    'id' => $projplanid
+                ]);
+                return $this->renderAjax('editprojplan', [
+                    'model' => $model,
+                    'pmdata' => $pmdata,
+                    'projectlevel' => $projectlevel,
+                    'careerdepart' => $careerdepart
+                ]);
+            }
+        }
+    }
+    
+    public function saveInterl($model){
+        $model->setAttribute('pmname', User::findOne([
+            'id' => $model->pmid
+        ])->usernameChn);
+        
+        // 设置当前操纵用户的信息
+        $userid = yii::$app->user->id;
+        $currentuser = new User();
+        $currentuser = User::findIdentity($userid);
+        //var_dump($currentuser);
+        $username = $currentuser->usernameChn;
+        $model->setAttribute('userid', $userid);
+        $model->setAttribute('username', $username);
+        
+        $workload = $model->workload;
+        if ($workload >= 5) {
+            // 专项
+            $model->setAttribute('projecttype', 2);
+        } else {
+            // 零星
+            $model->setAttribute('projecttype', 1);
+        }
+        
+        $model->save();
+        return 'ok';
+    }
+    
+    /*
+     * ajax提交新增的数据
+     */
+    public function actionAjaxaddprojplan(){
+        $model = new Projectplan();
         /*
          * 从数据库动态获取PM的名称和id
          *
@@ -41,46 +134,12 @@ class ProjectplanController extends Controller
          * 事业部
          */
         $arrCareerdepartment = [];
-        $Careerdepartment = new Careerdepartment();
-        $Careerdepartment = Careerdepartment::find()->all();
+        $careerdepart = new Careerdepartment();
+        $careerdepart = Careerdepartment::find()->all();
         
-        $from = yii::$app->getRequest()->getQueryParam('from');
-        // $ispost= yii::$app->getRequest()->isPost();
-        if ($from == 'modal') {
-            // 如果是修改的话
-            $projplanid = yii::$app->getRequest()->getQueryParam('id');
-            if ($projplanid == NULL) {
-                // 新增
-                // 传递过来的开始时间和结束时间
-                $begindate = yii::$app->getRequest()->getQueryParam('begindate');
-                $enddate = yii::$app->getRequest()->getQueryParam('enddate');
-                $model->setAttribute('begindate', $begindate);
-                $model->setAttribute('enddate', $enddate);
-                
-                return $this->renderAjax('addprojplan', [
-                    'model' => $model,
-                    'pmdata' => $pmdata,
-                    'projectlevel' => $projectlevel,
-                    'careerdepart' => $Careerdepartment
-                ]);
-            } else {
-                // 修改
-                $model = Projectplan::findOne([
-                    'id' => $projplanid
-                ]);
-                return $this->renderAjax('editprojplan', [
-                    'model' => $model,
-                    'pmdata' => $pmdata,
-                    'projectlevel' => $projectlevel,
-                    'careerdepart' => $Careerdepartment
-                ]);
-            }
-        } else 
-            // 新增
-            if ($model->load(yii::$app->request->post())) {
-                // return $this->render('/projectplan/index');
-                $model->validate();
-                
+        if ($model->load(yii::$app->request->post()) && yii::$app->request->isAjax) {
+            // return $this->render('/projectplan/index');
+            if($model->validate()){
                 $model->setAttribute('pmname', User::findOne([
                     'id' => $model->pmid
                 ])->usernameChn);
@@ -89,7 +148,7 @@ class ProjectplanController extends Controller
                 $userid = yii::$app->user->id;
                 $currentuser = new User();
                 $currentuser = User::findIdentity($userid);
-                var_dump($currentuser);
+                //var_dump($currentuser);
                 $username = $currentuser->usernameChn;
                 $model->setAttribute('userid', $userid);
                 $model->setAttribute('username', $username);
@@ -104,46 +163,81 @@ class ProjectplanController extends Controller
                 }
                 
                 $model->save();
-                // echo $model->begindate;
-                return $this->redirect('index.php');
+                return 'ok'; 
+            }else{
+                return $this->renderAjax('addprojplan', [
+                        'model' => $model,
+                        'pmdata' => $pmdata,
+                        'projectlevel' => $projectlevel,
+                        'careerdepart' => $careerdepart
+                    ]);
             }
-    }
-
-    public function actionUpdateprojplan()
-    {
-        $projplanid = yii::$app->getRequest()->getQueryParam('id');
-        
-        $model = new Projectplan();
-        
-        if ($projplanid != NULL && ($model = Projectplan::findOne($projplanid))) {
-            
-            if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $model->save()) {
-                
-                return $this->redirect('index.php');
-            }
-        }
-        
-        // return $this->redirect(['index']);
-    }
-
-    public function actionDelprojplan()
-    {
-        $id = Yii::$app->getRequest()->getQueryParam('id');
-        echo $id;
-        if ($id != NULL && $model = Projectplan::findOne($id)) {
-            var_dump($model);
-            $model->delete();
-            
-            return $this->redirect('index.php');
         }
     }
     
     /*
-     * 选择用户
+     * ajax提交修改的数据
      */
-    public function actionChoiceuser(){
-        $model=User::findAll();
-        return $this->renderAjax('choiceuser',[ 'model' => $model]);
+    public function actionAjaxupdateprojplan(){
+        $model = new Projectplan();
+        /*
+         * 从数据库动态获取PM的名称和id
+         *
+         */
+        $pmdata = new User();
+        // 找出所有PM，拼成数组
+        $pmdata = User::findAll([
+            'stationid' => '2'
+        ]);
+    
+        /*
+         * 固定需求级别
+         */
+        $myCommConfigData = new CommConfigData();
+        $projectlevel = $myCommConfigData->getProjectlevel();
+    
+        /*
+         * 事业部
+         */
+        $arrCareerdepartment = [];
+        $careerdepart = new Careerdepartment();
+        $careerdepart = Careerdepartment::find()->all();
+    
+        $projplanid = yii::$app->getRequest()->getQueryParam('id');
+        
+        
+        if ($projplanid != NULL && ($model = Projectplan::findOne($projplanid)) && $model->load(yii::$app->request->post()) && yii::$app->request->isAjax) {
+
+            if($model->validate()){
+                
+                $model->save();
+                return 'ok';
+            }else{
+                return $this->renderAjax('editprojplan', [
+                    'model' => $model,
+                    'pmdata' => $pmdata,
+                    'projectlevel' => $projectlevel,
+                    'careerdepart' => $careerdepart
+                ]);
+            }
+        }
+    }
+
+    /*
+     * 删除项目计划
+     */
+    public function actionDelprojplan()
+    {
+        $id = Yii::$app->getRequest()->getQueryParam('id');
+        
+        if ($id != NULL && $model = Projectplan::findOne($id)) {
+
+            $model->delete();
+            
+            return 'ok';
+        }else{
+            return '找不到对应的需求计划，请刷新页面重试！';
+        }
     }
     
 }

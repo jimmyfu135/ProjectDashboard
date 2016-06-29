@@ -4,7 +4,22 @@ namespace common\models;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
-
+/**
+ * This is the model class for table "taskassign".
+ *
+ * @property integer $id
+ * @property integer $taskid
+ * @property string $begindate
+ * @property string $enddate
+ * @property integer $userid
+ * @property string $username
+ * @property double $workload
+ * @property string $stationname
+ * @property integer $taskstatus
+ * @property string $color
+ * @property integer $created_at
+ * @property integer $updated_at
+ */
 class Task extends ActiveRecord{
 
 	public static function tableName(){
@@ -52,7 +67,7 @@ class Task extends ActiveRecord{
 	 */
 	public static function geAlltUser()
 	{
-		return ArrayHelper::index(User::find()->select('id,username')->asArray()->all(), 'id');
+		return ArrayHelper::index(User::find()->select('id,usernameChn')->asArray()->all(), 'id');
 	}
 
 	public static function taskCalendarList($departName){
