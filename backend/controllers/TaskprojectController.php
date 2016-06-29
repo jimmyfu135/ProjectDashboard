@@ -5,6 +5,7 @@ namespace backend\controllers;
 use yii\web\Controller;
 use common\models\Taskproject;
 use common\models\Task;
+use common\models\Projectplan;
 use common\models\User;
 use yii\helpers\Html;
 use yii\data\Pagination;
@@ -87,13 +88,33 @@ class TaskprojectController extends Controller{
 		}
 		return $this->redirect(['index']);
 	}
+
+    //任务指派
+	public function actionAssignedtask($id)
+	{
+		//需求id
+		$id = (int)$id;
+		$projectplanModel = new Projectplan();
+		$projectplanModel = Projectplan::findOne($id);
+		//判断该需求关联的任务是否存在，如果不存在则新增一条任务记录
+		$taskproject = Taskproject::find()->where(['planid' => $id])->one();;
+		if (!$taskproject) {
+			//新增一条记录
+			$taskproject = new Taskproject();
+			$taskproject->planid = $projectplanModel->id;
+			$taskproject->subject = $projectplanModel->subject;
+			$taskproject->begindate = $projectplanModel->begindate;
+			$taskproject->enddate = $projectplanModel->enddate;
+			$taskproject->workload = $projectplanModel->workload;
+			$taskproject->projecttype = $projectplanModel->projecttype;
+			$taskproject->projectlevel = $projectplanModel->projectlevel;
+			$taskproject->pmid = $projectplanModel->pmid;
+			$taskproject->departid = $projectplanModel->departid;
+			$taskproject->careerdepartid = $projectplanModel->careerdepartid;
+			$taskproject->save(false);
+		}
+		$taskid= $taskproject->id;
+		return $this->redirect(['task/index','taskid'=>$taskid]);
+	}
 }
-
-
-
-
-
-
-
-
 ?>

@@ -11,4 +11,4 @@ $this->registerCssFile('@web/css/public.css');
     ]
 ])?>
 </div>
-<?=$this->render('_form' , ['model' => $model, 'categorys' => $categorys,'taskstatus'=>$taskstatus]);?>
+<?=$this->render('_form' , ['model' => $model,'modelTask'=>$modelTask, 'categorys' => $categorys,'taskstatus'=>$taskstatus]);?>

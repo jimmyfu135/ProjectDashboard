@@ -5,8 +5,6 @@ use yii\helpers\ArrayHelper;
 use dosamigos\datepicker\DatePicker;
 use yii\base\Widget;
 ?>
-
-
 <script src= "js/addprojplan.js" />
 <div class="inner-container">
     <?=Html::beginForm('', 'post' , ['enctype' => 'multipart/form-data' , 'class' => 'form-horizontal' , 'id' =>'addForm' ])?>
@@ -15,7 +13,7 @@ use yii\base\Widget;
  		
 		<div class="form-group">
             <div class="control-label col-sm-2 col-md-2">
-            	<a href="<?="javascript:submitSendTask('$model->id')"?>" class="btn btn-primary">指派</a>
+            	<a href="<?=Url::to(['taskproject/assignedtask','id'=>$model->id])?>" class="btn btn-primary">指派</a>
             </div>
 			<div class="control-label col-sm-2 col-md-2"></div>
             <div class="control-label col-sm-2 col-md-7">

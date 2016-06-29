@@ -10,7 +10,7 @@ $this->registerJsFile('js/projectplan.js');
 <script src= "js/projectplan.js"></script>
 <a class="btn btn-success" id='newproj' data-toggle='modal' data-target='#create-modal'>新增项目计划</a>
 
-<a class="btn btn-success" id='newproj' href="javascript:showProjModal('2016-05-05','2016-07-07')" >新增项目计划</a>
+<a class="btn btn-success" id='newproj' href="javascript:addTaskModal('2016-05-05','2016-07-07')" >新增项目计划</a>
 
 <?php
 Modal::begin([

@@ -5,8 +5,9 @@
     $this->registerCssFile('@web/css/public.css');
 ?>
 	<div class="inner-container">
-	<caption><h4>需求：<small><strong>阳光城面积管理</strong></small></h4></caption>
 <?=Html::beginForm('' , 'post', ['enctype' => 'multipart/form-data' ,'class' => 'form-horizontal']);?>
+		<caption><h4>需求：<small><strong><?=$modelTask->subject?></strong></small></h4></caption>
+
 	<div class="form-group">
 		<?=Html::label('人员：' , 'userid' , ['class' =>'control-label col-sm-2 col-md-2' ])?>
 		<div class="controls col-sm-10 col-md-4">
@@ -46,7 +47,7 @@
 
 <div class="form-group">
 	<?=Html::submitButton("确认" , ['class' => 'btn btn-primary col-sm-offset-2']);?>
-	<a href="<?=\yii\helpers\Url::to(['index'])?>" class="btn btn-default">返回</a>
+	<a href="<?=\yii\helpers\Url::to(['index','taskid'=>$modelTask->id])?>" class="btn btn-default">返回</a>
 </div>
 
 <?=Html::endForm();?>

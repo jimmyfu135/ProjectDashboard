@@ -32,3 +32,4 @@ function submitTaskProj(url,data){
 		}
 	});
 }
+

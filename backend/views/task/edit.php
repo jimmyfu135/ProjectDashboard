@@ -10,5 +10,5 @@ $this->registerCssFile('@web/css/public.css');
         '指派调整'
     ]
 ])?>
-<?=$this->render('_form' , ['model' => $model,'categorys' => $categorys,'taskstatus'=>$taskstatus]);?>
+<?=$this->render('_form' , ['model' => $model,'modelTask'=>$modelTask,'categorys' => $categorys,'taskstatus'=>$taskstatus]);?>
 </div>

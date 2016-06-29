@@ -15,10 +15,10 @@
 	]
 ])?>
 <p style="text-align:right;">
-	<a href="<?=Url::to(['add'])?>" class="btn btn-primary">指派任务</a>
+	<a href="<?=Url::to(['add','taskid'=>$modelTask->id])?>" class="btn btn-primary">指派任务</a>
 </p>
 <table class="table table-hover">
-	<caption><h4>需求：<small><strong>阳光城面积管理</strong></small></h4></caption>
+	<caption><h4>需求：<small><strong><?=$modelTask->subject?></strong></small></h4></caption>
 <tr>
 	<th>人员</th><th>岗位</th><th>工作量</th><th>计划开始日期</th><th>计划完成日期</th><th>状态</th><th>修改日期</th><th>操作</th>
 </tr>
@@ -31,7 +31,7 @@
 	<td><?=$v->enddate?></td>
 	<td><?=isset($taskstatus[$v['taskstatus']])  ? $taskstatus[$v['taskstatus']]['name'] : '无';?></td>
 	<td><?=date('Y-m-d' , $v['updated_at'])?></td>
-	<td><a href="<?=Url::to(['edit' , 'id'=>$v->id])?>" class="data_op data_edit">编辑</a> | <a href="<?=Url::to(['delete' , 'id'=>$v->id]) ?>" class="data_op data_delete">删除</a></td>
+	<td><a href="<?=Url::to(['edit' , 'id'=>$v->id,'taskid'=>$modelTask->id])?>" class="data_op data_edit">编辑</a> | <a href="<?=Url::to(['delete' , 'id'=>$v->id,'taskid'=>$modelTask->id]) ?>" class="data_op data_delete">删除</a></td>
 </tr>
 <?php }?>
 </table>
