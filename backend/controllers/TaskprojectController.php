@@ -19,19 +19,14 @@ class TaskprojectController extends Controller{
 		return $this->render('index');
 	}
 
-
-
-	public function actionAddtaskproj(){
+	public function actionAddtaskproj()
+	{
 		$model = new Task();
-		$modelTask = new Taskproject();
-		//传递过来的开始时间和结束时间
-		$begindate=yii::$app->getRequest()->getQueryParam('begindate');
-		$enddate=yii::$app->getRequest()->getQueryParam('enddate');
-		$model->begindate= $begindate;
-		$model->enddate=$enddate;
-		$model->username=User::findIdentity($model->userid);
+		$modelTask = new Taskproject();//获取任务状态
+		$myCommConfigData = new CommConfigData();
+		$taskStatus = $myCommConfigData->getTaskStatus();
 		//新增保存
-		if(Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $modelTask->load(Yii::$app->request->post())) {
+		if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $modelTask->load(Yii::$app->request->post()) && yii::$app->request->isAjax ) {
 			$modelTask->begindate = $model->begindate;
 			$modelTask->enddate = $model->enddate;
 			$modelTask->taskstatus = $model->taskstatus;
@@ -39,31 +34,35 @@ class TaskprojectController extends Controller{
 			//事务
 			$transaction = \Yii::$app->db->beginTransaction();
 			//主从表保存
-			if ($modelTask->save(false)) {
-				$model->taskid=$modelTask->id;
+			if ($modelTask->save()) {
+				$model->taskid = $modelTask->id;
 				if (!$model->save()) {
 					$transaction->rollback();
+					return $this->renderAjax('add', ['model' => $model, 'categorys' => Task::getUser(), 'modelTask' => $modelTask, 'taskstatus' => $taskStatus]);
 				} else {
 					$transaction->commit();
-					return $this->redirect(['index']);
+					return 'ok';
 				}
 			} else {
 				$transaction->rollback();
+				return $this->renderAjax('add', ['model' => $model, 'categorys' => Task::getUser(), 'modelTask' => $modelTask, 'taskstatus' => $taskStatus]);
 			}
 		}
-		//获取任务状态
-		$myCommConfigData=new CommConfigData();
-		$taskStatus=$myCommConfigData->getTaskStatus();
-		return $this->renderAjax('add' , ['model' => $model,'categorys' => Task::getUser(),'modelTask'=>$modelTask,'taskstatus'=>$taskStatus]);
+		else {
+			//传递过来的开始时间和结束时间
+			$begindate = yii::$app->getRequest()->getQueryParam('begindate');
+			$enddate = yii::$app->getRequest()->getQueryParam('enddate');
+			$model->begindate = $begindate;
+			$model->enddate = $enddate;
+		}
+		return $this->renderAjax('add', ['model' => $model, 'categorys' => Task::getUser(), 'modelTask' => $modelTask, 'taskstatus' => $taskStatus]);
 	}
 
 
 	public function actionEdit($id){
 		$id = (int)$id;
 		if($id > 0 && ($model = Task::findOne($id))){
-
 			if(Yii::$app->request->isPost && $model -> load(Yii::$app->request->post()) && $model->save()){
-				Yii::$app->session->setFlash('success', '修改成功');
 				return $this->redirect(['index']);
 			}
 			//获取任务状态

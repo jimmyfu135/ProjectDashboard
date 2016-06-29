@@ -11,16 +11,16 @@ $this->registerJsFile('@web/js/addprojplan.js',['depends' => ['backend\assets\Ap
 ?>
 
 <div class="inner-container">
-    <?=Html::beginForm('' , 'post' , ['enctype' => 'multipart/form-data' , 'class' => 'form-horizontal' , 'id' =>'addForm' ])?>
-	   
- 		<?= $this->render('_form' , [ 'model' => $model,'pmdata'=>$pmdata,'projectlevel'=>$projectlevel,'careerdepart'=>$careerdepart]); ?>
- 		
-		<div class="form-group">
-		 	<div style="margin-top:10px" class="col-sm-10 col-sm-offset-10 ">
-		 	
-		 		<a href="javascript:submitAddProjPlan()" class="btn btn-primary">提交</a>
-				<a href="#" class="btn btn-primary" data-dismiss="modal">关闭</a>
-		 	</div>
+	<?=Html::beginForm('' , 'post' , ['enctype' => 'multipart/form-data' , 'class' => 'form-horizontal' , 'id' =>'addForm' ])?>
+
+	<?= $this->render('_form' , [ 'model' => $model,'pmdata'=>$pmdata,'projectlevel'=>$projectlevel,'careerdepart'=>$careerdepart]); ?>
+
+	<div class="form-group">
+		<div style="margin-top:10px" class="col-sm-10 col-sm-offset-10 ">
+
+			<a href="javascript:submitAddProjPlan()" class="btn btn-primary">提交</a>
+			<a href="#" class="btn btn-primary" data-dismiss="modal">关闭</a>
 		</div>
+	</div>
 	<?=Html::endForm();?>
 </div>

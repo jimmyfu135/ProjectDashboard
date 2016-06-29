@@ -35,7 +35,7 @@ class Taskproject extends ActiveRecord{
 
 	public function rules(){
 		return [
-			['subject' , 'safe'],
+			['subject' , 'required','message' => '任务不能为空'],
 		];
 	}
 

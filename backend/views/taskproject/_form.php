@@ -4,17 +4,16 @@
      use yii\helpers\ArrayHelper;
     $this->registerCssFile('@web/css/public.css');
 ?>
-	<div class="inner-container">
-<?=Html::beginForm('' , 'post', ['enctype' => 'multipart/form-data' ,'class' => 'form-horizontal']);?>
-		<div class="form-group">
+
+<div class="form-group">
 			<?=Html::label('任务名称' , 'subject' , ['class' =>'control-label col-sm-2 col-md-2'])?>
 			<div class="controls col-sm-10 col-md-10">
 				<?=Html::activeInput('text' , $modelTask , 'subject' , ['class' => 'form-control input'])?>
-				<?=Html::error($modelTask , 'subject')?>
+				<?=Html::error($modelTask , 'subject', ['class' => 'error'])?>
 			</div>
 		</div>
 	<div class="form-group">
-		<?=Html::label('研发人员：' , 'userid' , ['class' =>'control-label col-sm-2 col-md-2' ])?>
+		<?=Html::label('研发人员' , 'userid' , ['class' =>'control-label col-sm-2 col-md-2' ])?>
 		<div class="controls col-sm-10 col-md-4">
 			<?=Html::activeDropDownList($model, 'userid', ArrayHelper::map($categorys,'id', 'usernameChn'), ['prompt'=>'请选择','class' => 'form-control'])?>
 			<?=Html::error($model , 'userid' , ['class' => 'error']);?>
@@ -38,7 +37,7 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<?=Html::label('工作量：' , 'workload' , ['class' => 'control-label col-sm-2 col-md-2'])?>
+		<?=Html::label('工作量' , 'workload' , ['class' => 'control-label col-sm-2 col-md-2'])?>
 		<div class="controls col-sm-10 col-md-4">
 			<?=Html::activeInput('text' , $model , 'workload' , ['class' => 'form-control'])?>
 			<?=Html::error($model , 'workload' , ['class' => 'error']);?>
@@ -48,12 +47,4 @@
 			<?=Html::activeDropDownList($model,'taskstatus' ,ArrayHelper::map($taskstatus,'id', 'name'), ['prompt'=>'请选择','class' => 'form-control select'])?>
 			<?=Html::error($model , 'taskstatus', ['class' => 'error'])?>
 		</div>
-	</div>
-
-<div class="form-group">
-	<?=Html::submitButton("确认" , ['class' => 'btn btn-primary col-sm-offset-2']);?>
-	<a href="<?=\yii\helpers\Url::to(['index'])?>" class="btn btn-default">返回</a>
-</div>
-
-<?=Html::endForm();?>
 	</div>

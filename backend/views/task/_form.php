@@ -10,7 +10,7 @@
 	<div class="form-group">
 		<?=Html::label('人员：' , 'userid' , ['class' =>'control-label col-sm-2 col-md-2' ])?>
 		<div class="controls col-sm-10 col-md-4">
-			<?=Html::activeDropDownList($model, 'userid', ArrayHelper::map($categorys,'id', 'usernameChn'), ['prompt'=>'请选择','class' => 'form-control'])?>
+			<?=Html::activeDropDownList($model, 'userid', ArrayHelper::map($categorys,'id', 'username'), ['prompt'=>'请选择','class' => 'form-control'])?>
 			<?=Html::error($model , 'userid' , ['class' => 'error']);?>
 		</div>
 		<?=Html::label('岗位' , 'stationname', ['class' =>'control-label col-sm-2 col-md-2'])?>
