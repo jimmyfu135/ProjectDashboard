@@ -8,6 +8,7 @@ use yii;
 use common\models\User;
 use common\models\CommConfigData;
 use common\models\Careerdepartment;
+use yii\base\Response;
 
 class ProjectplanController extends Controller
 {
@@ -47,39 +48,44 @@ class ProjectplanController extends Controller
         $careerdepart = new Careerdepartment();
         $careerdepart = Careerdepartment::find()->all();
 
-        $from = yii::$app->getRequest()->getQueryParam('from');
-        // $ispost= yii::$app->getRequest()->isPost();
-        if ($from == 'modal') {
-            // 如果是修改的话
-            $projplanid = yii::$app->getRequest()->getQueryParam('id');
-            if ($projplanid == NULL) {
-                // 新增
-                // 传递过来的开始时间和结束时间
-                $begindate = yii::$app->getRequest()->getQueryParam('begindate');
-                $enddate = yii::$app->getRequest()->getQueryParam('enddate');
-                $model->setAttribute('begindate', $begindate);
-                $model->setAttribute('enddate', $enddate);
-                
-                
-                return $this->renderAjax('addprojplan', [
-                    'model' => $model,
-                    'pmdata' => $pmdata,
-                    'projectlevel' => $projectlevel,
-                    'careerdepart' => $careerdepart
-                ]);
-            } else {
-                // 修改
-                $model = Projectplan::findOne([
-                    'id' => $projplanid
-                ]);
-                return $this->renderAjax('editprojplan', [
-                    'model' => $model,
-                    'pmdata' => $pmdata,
-                    'projectlevel' => $projectlevel,
-                    'careerdepart' => $careerdepart
-                ]);
-            }
+        $arrchargeuserid=[];
+        // 如果是修改的话
+        $projplanid = yii::$app->getRequest()->getQueryParam('id');
+        if ($projplanid == NULL) {
+            // 新增
+            // 传递过来的开始时间和结束时间
+            $begindate = yii::$app->getRequest()->getQueryParam('begindate');
+            $enddate = yii::$app->getRequest()->getQueryParam('enddate');
+            $model->setAttribute('begindate', $begindate);
+            $model->setAttribute('enddate', $enddate);
+            
+            
+            return $this->renderAjax('addprojplan', [
+                'model' => $model,
+                'pmdata' => $pmdata,
+                'projectlevel' => $projectlevel,
+                'careerdepart' => $careerdepart,
+                'arrchargeuserid'=>[]
+            ]);
+        } else {
+            // 修改
+            $model = Projectplan::findOne([
+                'id' => $projplanid
+            ]);
+            
+            $model->begindate=substr($model->begindate,0,10);
+            $model->enddate=substr($model->enddate, 0,10);
+            $model->yjsubmitdate=substr($model->yjsubmitdate, 0,10);
+            
+            return $this->renderAjax('editprojplan', [
+                'model' => $model,
+                'pmdata' => $pmdata,
+                'projectlevel' => $projectlevel,
+                'careerdepart' => $careerdepart,
+                'arrchargeuserid'=>[]
+            ]);
         }
+    
     }
     
     public function saveInterl($model){
@@ -89,12 +95,8 @@ class ProjectplanController extends Controller
         
         // 设置当前操纵用户的信息
         $userid = yii::$app->user->id;
-        $currentuser = new User();
-        $currentuser = User::findIdentity($userid);
-        //var_dump($currentuser);
-        $username = $currentuser->usernameChn;
+        
         $model->setAttribute('userid', $userid);
-        $model->setAttribute('username', $username);
         
         $workload = $model->workload;
         if ($workload >= 5) {
@@ -140,18 +142,11 @@ class ProjectplanController extends Controller
         if ($model->load(yii::$app->request->post()) && yii::$app->request->isAjax) {
             // return $this->render('/projectplan/index');
             if($model->validate()){
-                $model->setAttribute('pmname', User::findOne([
-                    'id' => $model->pmid
-                ])->usernameChn);
-                
+               
                 // 设置当前操纵用户的信息
                 $userid = yii::$app->user->id;
-                $currentuser = new User();
-                $currentuser = User::findIdentity($userid);
-                //var_dump($currentuser);
-                $username = $currentuser->usernameChn;
+               
                 $model->setAttribute('userid', $userid);
-                $model->setAttribute('username', $username);
                 
                 $workload = $model->workload;
                 if ($workload >= 5) {
@@ -169,7 +164,8 @@ class ProjectplanController extends Controller
                         'model' => $model,
                         'pmdata' => $pmdata,
                         'projectlevel' => $projectlevel,
-                        'careerdepart' => $careerdepart
+                        'careerdepart' => $careerdepart,
+                        'arrchargeuserid'=>[]
                     ]);
             }
         }
@@ -239,5 +235,24 @@ class ProjectplanController extends Controller
             return '找不到对应的需求计划，请刷新页面重试！';
         }
     }
-    
+   
+    /*
+     * 获取指定事业部下面的所有用户
+     */
+    public function actionAjaxgetcareeruser(){
+        $id = Yii::$app->getRequest()->getQueryParam('careerdepartid');
+        $careeruser=new User;
+        if($id!=NULL){
+            //$taskproject=Taskproject::find()->where(['planid'=>$id])->one();;
+            $sql = 'select usernameChn,id from user where careerdepartmentid = :careerdepartmentid';
+           
+            $careeruser= User::findBySql($sql)->addParams([':careerdepartmentid' => $id])->asArray()->all();
+            
+            //return $careeruser;
+            //\yii\helpers\Json::encode($test);
+            return yii\helpers\Json::encode($careeruser);
+        }else{
+            return '没有收到';
+        }
+    }
 }

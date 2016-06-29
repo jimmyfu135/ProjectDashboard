@@ -50,6 +50,7 @@ class Projectplan extends ActiveRecord{
             ['workload' , 'required' ,'message'=>'预计工作量不允许为空'],
             ['customer' , 'required' ,'message'=>'客户名称不允许为空'],
             ['careerdepartid' , 'required' ,'message'=>'责任事业部不允许为空'],
+            ['chargeuserid', 'required' ,'message'=>'需求负责人不允许为空']
             
         ];
         /*return array(
