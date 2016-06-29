@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use common\models\Projectplan;
+use common\models\Task;
 
 /**
  * Site controller
@@ -34,7 +35,11 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['calendar-list', 'error'],
+                        'actions' => ['requirement-calendar-list', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['task-calendar-list', 'error'],
                         'allow' => true,
                     ],
                 ],
@@ -89,7 +94,7 @@ class SiteController extends Controller
     }
 
     //返回日志表的数据
-    public  function actionCalendarList(){
+    public  function actionRequirementCalendarList(){
         /*$calendarList = [
             [
             'title' =>  'All Day Event',
@@ -100,7 +105,26 @@ class SiteController extends Controller
                 'start' =>  '2016-06-01'
             ],
         ];*/
-        $calendarList = Projectplan::calendarList();
-        echo Json::encode($calendarList);
+        //获取组的参数
+        $departName = $_GET["abuname"];
+        $calendarList = Projectplan::requirementCalendarList($departName);
+        return Json::encode($calendarList);
+    }
+
+    public  function actionTaskCalendarList(){
+        /*$calendarList = [
+            [
+            'title' =>  'All Day Event',
+            'start' =>  '2016-05-01'
+            ],
+            [
+                'title' =>  'sdfsdf',
+                'start' =>  '2016-06-01'
+            ],
+        ];*/
+        //获取组的参数
+        $departName = $_GET["abuname"];
+        $calendarList = Task::taskCalendarList($departName);
+        return Json::encode($calendarList);
     }
 }

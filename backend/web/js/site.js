@@ -17,7 +17,24 @@ $(document).ready(function() {
         },
         selectable: true,
         selectHelper: true,
-        events: 'index.php?r=site/calendar-list',
+        //events: 'index.php?r=site/calendar-list',
+        events:function (start,end,timezone,callback) {
+            var abuName = "";
+            $("#select2 dd").each(function () {
+                if($(this).hasClass("selected")){
+                    abuName = $(this).text();
+                    return false;
+                }
+            });
+            $.ajax({
+                url:'index.php?r=site/requirement-calendar-list&abuname=' + abuName,
+                success:function (data) {
+                    var events = [];
+                    events = JSON.parse(data);
+                    callback(events);
+                }
+            });
+        },
         select: function(start, end) {
             var formatStart = start.format();
             var formatEnd = end.format();
@@ -43,14 +60,27 @@ $(document).ready(function() {
         },
         selectable: true,
         selectHelper: true,
-        events: [
-            {
-                title:'test',
-                start:'2016-06-27'
-            }
-        ],
+        events: function (start,end,timezone,callback) {
+            var abuName = "";
+            $("#select2 dd").each(function () {
+                if($(this).hasClass("selected")){
+                    abuName = $(this).text();
+                    return false;
+                }
+            });
+            $.ajax({
+                url:'index.php?r=site/task-calendar-list&abuname=' + abuName,
+                success:function (data) {
+                    var events = [];
+                    events = JSON.parse(data);
+                    callback(events);
+                }
+            });
+        },
         select: function(start, end) {
-            var title = showProjModal('2016-06-25','2016-06-26');
+            var formatStart = start.format();
+            var formatEnd = end.format();
+            var title = showProjModal(formatStart,formatEnd);
             var eventData;
             if (title) {
                 eventData = {

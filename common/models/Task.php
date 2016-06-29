@@ -55,6 +55,11 @@ class Task extends ActiveRecord{
 		return ArrayHelper::index(User::find()->select('id,username')->asArray()->all(), 'id');
 	}
 
+	public static function taskCalendarList($departName){
+		//return Projectplan::find()->all();
+		$sql = 'select `subject` as `title`, date_format(`begindate`,\'%Y-%m-%d\') as `start`,date_format(`enddate`,\'%Y-%m-%d\') as `end`,color from v_taskassign where name = :departname';
+		return Projectplan::findBySql($sql)->addParams([':departname' => $departName])->asArray()->all();
+	}
 
 }
 
