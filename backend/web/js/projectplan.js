@@ -18,6 +18,7 @@ function editProjPlan(projPlanID) {
 	$(".modal-title").text("修改项目计划");
 	$.get("index.php?r=projectplan/addprojplan&from=modal&id=" + projPlanID, {}, function(data) {
 		$('.modal-body').html(data);
+		changeload();
 	});
 	$('#create-modal').modal('show');
 }
@@ -61,14 +62,17 @@ function submitDelProjPlan(id){
 //选择事业部，默认带出事业部下面的用户
 function changecareerdepart(){
 	var scareerdepartid=$("#projectplan-careerdepartid").val();
+	$("#projectplan-chargeuserid").empty();
+	$('#projectplan-chargeuserid').append("<option value=''>请选择</option>");
+	if(scareerdepartid==""){
+		return;
+	}
 	$.ajax({
         url: 'index.php?r=projectplan/ajaxgetcareeruser&careerdepartid='+scareerdepartid,
         type: 'get',
         data: scareerdepartid,
         success: function (data) {
         	var arrUser= JSON.parse(data);
-        	$("#projectplan-chargeuserid").empty();
-        	 $('#projectplan-chargeuserid').append("<option value=''>请选择</option>");
         	for (var i = 0; i < arrUser.length; i++) {
                 $('#projectplan-chargeuserid').append("<option value=" + arrUser[i].id + ">" + arrUser[i].usernameChn + "</option>");
             }

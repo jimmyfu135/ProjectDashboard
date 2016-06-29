@@ -77,12 +77,22 @@ class ProjectplanController extends Controller
             $model->enddate=substr($model->enddate, 0,10);
             $model->yjsubmitdate=substr($model->yjsubmitdate, 0,10);
             
+            $careerdepartid = $model->careerdepartid;
+            $careeruser=new User;
+            if($careerdepartid!=NULL){
+                //$taskproject=Taskproject::find()->where(['planid'=>$id])->one();;
+                $sql = 'select usernameChn,id from user where careerdepartmentid = :careerdepartmentid';
+                $careeruser= User::findBySql($sql)->addParams([':careerdepartmentid' => $careerdepartid])->asArray()->all();
+            }else{
+                $careeruser=[];
+            }
+            
             return $this->renderAjax('editprojplan', [
                 'model' => $model,
                 'pmdata' => $pmdata,
                 'projectlevel' => $projectlevel,
                 'careerdepart' => $careerdepart,
-                'arrchargeuserid'=>[]
+                'arrchargeuserid'=>$careeruser
             ]);
         }
     
@@ -222,16 +232,16 @@ class ProjectplanController extends Controller
                 $careeruser=[];
             }
             if($model->validate()){
-                
                 $model->save();
                 return 'ok';
             }else{
+                
                 return $this->renderAjax('editprojplan', [
                     'model' => $model,
                     'pmdata' => $pmdata,
                     'projectlevel' => $projectlevel,
                     'careerdepart' => $careerdepart,
-                    'careeruser'=>$careeruser
+                    'arrchargeuserid'=>$careeruser
                 ]);
             }
         }
