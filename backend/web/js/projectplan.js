@@ -2,8 +2,6 @@
  * 新增项目计划
  */
 function showProjModal(bgnDate, enddate) {
-	editProjPlan(39);
-	return;
 	$(".modal-title").text("新增项目计划");
 	$.get("index.php?r=projectplan/addprojplan&from=modal&begindate=" + bgnDate
 			+ "&enddate=" + enddate, {}, function(data) {
