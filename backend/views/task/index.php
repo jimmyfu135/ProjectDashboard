@@ -24,7 +24,7 @@
 </tr>
 <?php foreach($data as $v){?>
 <tr>
-	<td><?=isset($categorys[$v['userid']])  ? $categorys[$v['userid']]['username'] : '用户不存在';?></td>
+	<td><?=isset($categorys[$v['userid']])  ? $categorys[$v['userid']]['usernameChn'] : '用户不存在';?></td>
 	<td><?=$v->stationname?></td>
 	<td><?=$v->workload?></td>
 	<td><?=$v->begindate?></td>

@@ -5,37 +5,37 @@ use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 /**
- * This is the model class for table "taskassign".
+ * This is the model class for table "task".
  *
  * @property integer $id
- * @property integer $taskid
+ * @property string $subject
  * @property string $begindate
  * @property string $enddate
+ * @property integer $planid
+ * @property integer $pmid
+ * @property string $pmname
+ * @property integer $departid
+ * @property string $departname
+ * @property integer $careerdepartid
+ * @property string $careerdepartname
+ * @property integer $projecttype
+ * @property double $workload
+ * @property integer $projectlevel
+ * @property integer $taskstatus
  * @property integer $userid
  * @property string $username
- * @property double $workload
- * @property string $stationname
- * @property integer $taskstatus
- * @property string $color
  * @property integer $created_at
  * @property integer $updated_at
  */
-class Task extends ActiveRecord{
+class Taskproject extends ActiveRecord{
 
 	public static function tableName(){
-		return '{{%taskassign}}';
+		return '{{%task}}';
 	}
 
 	public function rules(){
 		return [
-			['userid' , 'required','message' => '请选择人员'],
-			['begindate' , 'required', 'message' => '开始日期不能为空'],
-			['enddate' , 'required', 'message' => '结束日期不能为空'],
-			//[['begindate', 'enddate'], 'date', 'message' => '日期格式不合法'],
-			['workload' , 'number', 'min' => 0, 'message' => '请录入数值', 'tooSmall' => '请录入大于0的数值'],
-			['workload' , 'required','message' => '请录入工作量'],
-			['taskstatus' , 'required','message' => '请选择任务状态'],
-			['stationname' , 'required','message' => '请选择岗位'],
+			['subject' , 'safe'],
 		];
 	}
 

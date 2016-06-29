@@ -8,12 +8,29 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
- * Projectplan model
+ * This is the model class for table "projectplan".
  *
  * @property integer $id
  * @property string $subject
  * @property string $begindate
  * @property string $enddate
+ * @property string $yjsubmitdate
+ * @property integer $chargeuserid
+ * @property string $chargeusername
+ * @property integer $pmid
+ * @property string $pmname
+ * @property integer $departid
+ * @property string $departname
+ * @property integer $careerdepartid
+ * @property string $careerdepartname
+ * @property integer $projecttype
+ * @property double $workload
+ * @property integer $projectlevel
+ * @property string $customer
+ * @property integer $userid
+ * @property string $username
+ * @property integer $created_at
+ * @property integer $updated_at
  */
 class Projectplan extends ActiveRecord{
     public static function tableName()

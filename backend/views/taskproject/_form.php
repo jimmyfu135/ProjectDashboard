@@ -5,10 +5,16 @@
     $this->registerCssFile('@web/css/public.css');
 ?>
 	<div class="inner-container">
-	<caption><h4>需求：<small><strong>阳光城面积管理</strong></small></h4></caption>
 <?=Html::beginForm('' , 'post', ['enctype' => 'multipart/form-data' ,'class' => 'form-horizontal']);?>
+		<div class="form-group">
+			<?=Html::label('任务名称' , 'subject' , ['class' =>'control-label col-sm-2 col-md-2'])?>
+			<div class="controls col-sm-10 col-md-10">
+				<?=Html::activeInput('text' , $modelTask , 'subject' , ['class' => 'form-control input'])?>
+				<?=Html::error($modelTask , 'subject')?>
+			</div>
+		</div>
 	<div class="form-group">
-		<?=Html::label('人员：' , 'userid' , ['class' =>'control-label col-sm-2 col-md-2' ])?>
+		<?=Html::label('研发人员：' , 'userid' , ['class' =>'control-label col-sm-2 col-md-2' ])?>
 		<div class="controls col-sm-10 col-md-4">
 			<?=Html::activeDropDownList($model, 'userid', ArrayHelper::map($categorys,'id', 'usernameChn'), ['prompt'=>'请选择','class' => 'form-control'])?>
 			<?=Html::error($model , 'userid' , ['class' => 'error']);?>
