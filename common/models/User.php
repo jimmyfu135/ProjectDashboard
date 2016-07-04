@@ -11,15 +11,20 @@ use yii\web\IdentityInterface;
  * User model
  *
  * @property integer $id
+ * @property string $usernameChn
  * @property string $username
+ * @property string $auth_key
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
- * @property string $auth_key
+ * @property integer $role
+ * @property integer $stationid
+ * @property integer $departid
  * @property integer $status
+ * @property string $color
  * @property integer $created_at
  * @property integer $updated_at
- * @property string $password write-only password
+ * @property integer $careerdepartmentid
  */
 class User extends ActiveRecord implements IdentityInterface
 {

@@ -51,13 +51,10 @@ class Projectplan extends ActiveRecord{
             ['workload' , 'required' ,'message'=>'预计工作量不允许为空'],
             ['customerid' , 'required' ,'message'=>'客户名称不允许为空'],
             ['careerdepartid' , 'required' ,'message'=>'责任事业部不允许为空'],
-            ['chargeuserid', 'required' ,'message'=>'需求负责人不允许为空']
-            
+            ['chargeuserid', 'required' ,'message'=>'需求负责人不允许为空'],
+            ['workload', 'number','message'=>'预计工作量必须是数值'],
+            ['subject', 'string', 'max' => 100,'message'=>'项目计划名称不允许大于100字节'],
         ];
-        /*return array(
-            //必填校验
-            array('subject, begindate, enddate,yjsubmitdate,chargeuserid', 'required')
-        );*/
     }
 
     public static function requirementCalendarList($departName){

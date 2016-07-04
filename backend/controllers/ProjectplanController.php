@@ -5,6 +5,7 @@ use yii\web\Controller;
 use common\models;
 use common\models\Projectplan;
 use common\models\Customer;
+use common\models\Task;
 use yii;
 use common\models\User;
 use common\models\CommConfigData;
@@ -25,7 +26,7 @@ class ProjectplanController extends Controller
     public function actionAddprojplan()
     {
         $model = new Projectplan();
-        
+
         /*
          * 从数据库动态获取PM的名称和id
          *
@@ -97,8 +98,28 @@ class ProjectplanController extends Controller
                 $careeruser = [];
                 $customer=[];
             }
-           
-            return $this->renderAjax('editprojplan', [
+            //锁定的需求不能操作
+            $task=new Task();
+            $sqlTask='SELECT taskassign.id FROM taskassign INNER JOIN task ON taskassign.taskid=task.id WHERE task.planid=:planid';
+            $task=Task::findBySql($sqlTask)->addParams([':planid'=>$projplanid])->asArray()->all();
+            
+            
+            //只能操作本ABU/事业部的需求
+            $loginuserid = yii::$app->user->id;
+            $loginuser=User::findIdentity($loginuserid);
+            $currentprojdepart=new User();
+            $sqlopreateuser='';
+            //abu用户
+            if($loginuser->departid>-1){
+                $sqlopreateuser='select `user`.id from user where departid=:departid and id=:loginuserid and :careerdepartmentid=:careerdepartmentid ';
+            }else{
+                //事业部用户
+                $sqlopreateuser='select `user`.id from user where careerdepartmentid=:careerdepartmentid and id=:loginuserid and :departid=:departid ';
+            }
+            $currentprojdepart=User::findBySql($sqlopreateuser,[':departid'=>$model->departid,':careerdepartmentid'=>$model->careerdepartid,':loginuserid'=>$loginuserid])->asArray()->all();
+            
+            if(count($task)>0 || count($currentprojdepart)==0){
+                return $this->renderAjax('viewprojplan', [
                 'model' => $model,
                 'pmdata' => $pmdata,
                 'projectlevel' => $projectlevel,
@@ -106,6 +127,17 @@ class ProjectplanController extends Controller
                 'arrchargeuserid' => $careeruser,
                 'arrcustomer'=>$customer
             ]);
+            }else{
+                //只能操作本ABU/事业部的需求
+                return $this->renderAjax('editprojplan', [
+                    'model' => $model,
+                    'pmdata' => $pmdata,
+                    'projectlevel' => $projectlevel,
+                    'careerdepart' => $careerdepart,
+                    'arrchargeuserid' => $careeruser,
+                    'arrcustomer'=>$customer
+                ]);
+            }
         }
     }
 
@@ -182,6 +214,8 @@ class ProjectplanController extends Controller
                 if($customerid!=NULL){
                     $model->customer=Customer::findOne($customerid)->name;
                 }
+                //保存PM所属的部门
+                $model->departid=User::findIdentity($model->pmid)->departid;
                 $model->save();
                 return 'ok';
             } else {
@@ -254,6 +288,8 @@ class ProjectplanController extends Controller
                 if($customerid!=NULL){
                     $model->customer=Customer::findOne($customerid)->name;
                 }
+                //保存PM所属的部门
+                $model->departid=User::findIdentity($model->pmid)->departid;
                 $model->save();
                 return 'ok';
             } else {
@@ -330,7 +366,7 @@ class ProjectplanController extends Controller
             
             return yii\helpers\Json::encode($customer);
         } else {
-            return '没有收到';
+            return [];
         }
     }
 }
