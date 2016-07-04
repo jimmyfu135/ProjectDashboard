@@ -64,9 +64,12 @@ function changecareerdepart(){
 	var scareerdepartid=$("#projectplan-careerdepartid").val();
 	$("#projectplan-chargeuserid").empty();
 	$('#projectplan-chargeuserid').append("<option value=''>请选择</option>");
+	$("#projectplan-customerid").empty();
+	$('#projectplan-customerid').append("<option value=''>请选择</option>");
 	if(scareerdepartid==""){
 		return;
 	}
+	//获取事业部负责人
 	$.ajax({
         url: 'index.php?r=projectplan/ajaxgetcareeruser&careerdepartid='+scareerdepartid,
         type: 'get',
@@ -76,6 +79,20 @@ function changecareerdepart(){
         	for (var i = 0; i < arrUser.length; i++) {
                 $('#projectplan-chargeuserid').append("<option value=" + arrUser[i].id + ">" + arrUser[i].usernameChn + "</option>");
             }
+        }
+    });
+	//获取事业部客户
+	$.ajax({
+        url: 'index.php?r=projectplan/ajaxgetcustomer&careerdepartid='+scareerdepartid,
+        type: 'get',
+        data: scareerdepartid,
+        success: function (data) {
+        	var arrUser= JSON.parse(data);
+        	for (var i = 0; i < arrUser.length; i++) {
+                $('#projectplan-customerid').append("<option value=" + arrUser[i].id + ">" + arrUser[i].name + "</option>");
+            }
+        },
+        error:function(data){
         }
     });
 }

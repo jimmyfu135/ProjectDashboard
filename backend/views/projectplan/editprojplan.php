@@ -9,7 +9,8 @@ use yii\base\Widget;
 <div class="inner-container">
     <?=Html::beginForm('', 'post' , ['enctype' => 'multipart/form-data' , 'class' => 'form-horizontal' , 'id' =>'addForm' ])?>
 	   
- 		<?= $this->render('_form' , [ 'model' => $model,'pmdata'=>$pmdata,'projectlevel'=>$projectlevel,'careerdepart'=>$careerdepart,'arrchargeuserid'=>$arrchargeuserid]); ?>
+ 		<?= $this->render('_form' , [ 'model' => $model,'pmdata'=>$pmdata,'projectlevel'=>$projectlevel,'careerdepart'=>$careerdepart,
+ 		    'arrchargeuserid'=>$arrchargeuserid,'arrcustomer'=>$arrcustomer]); ?>
  		
 		<div class="form-group">
             <div class="control-label col-sm-2 col-md-2">

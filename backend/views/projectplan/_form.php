@@ -17,18 +17,6 @@ $this->registerJsFile('@web/js/projectplanform.js');
     </div>
 </div>
 <div class="form-group">
-    <?=Html::label('客户名称' , 'customer' , ['class' =>'control-label col-sm-2 col-md-2'])?>
-    <div class="controls col-sm-10 col-md-4">
-        <?=Html::activeInput('text' , $model , 'customer' , ['class' => 'form-control input'])?>
-        <?=Html::error($model , 'customer', ['class' => 'error'])?>
-    </div>
-    <?=Html::label('需求PM' , 'pmid', ['class' =>'control-label col-sm-2 col-md-2'])?>
-    <div class="controls col-sm-10 col-md-4">
-        <?=Html::activeDropDownList($model,'pmid' ,ArrayHelper::map($pmdata,'id', 'usernameChn'), ['prompt'=>'请选择','class' => 'form-control select'])?>
-        <?=Html::error($model , 'pmid', ['class' => 'error'])?>
-    </div>
-</div>
-<div class="form-group">
     <?=Html::label('计划开始时间' , 'begindate' , ['class' =>'control-label col-sm-2 col-md-2'])?>
     <div class="controls col-sm-10 col-md-4">
         <?=Html::activeInput('date' , $model , 'begindate' , ['class' => 'form-control date'])?>
@@ -75,5 +63,19 @@ $this->registerJsFile('@web/js/projectplanform.js');
      <div class="controls col-sm-10 col-md-4">
         <?=Html::activeDropDownList($model,'chargeuserid' ,ArrayHelper::map($arrchargeuserid,'id', 'usernameChn'), ['prompt'=>'请选择','class' => 'form-control select'])?>
         <?=Html::error($model , 'chargeuserid', ['class' => 'error'])?>
+    </div>
+</div>
+<div class="form-group">
+    <?=Html::label('客户名称' , 'customerid' , ['class' =>'control-label col-sm-2 col-md-2'])?>
+    <div class="controls col-sm-10 col-md-10">
+        <?=Html::activeDropDownList($model,'customerid' ,ArrayHelper::map($arrcustomer,'id', 'name'), ['prompt'=>'请选择','class' => 'form-control select'])?>
+        <?=Html::error($model , 'customerid', ['class' => 'error'])?>
+    </div>
+</div>
+<div class="form-group">
+	<?=Html::label('需求PM' , 'pmid', ['class' =>'control-label col-sm-2 col-md-2'])?>
+    <div class="controls col-sm-10 col-md-4">
+        <?=Html::activeDropDownList($model,'pmid' ,ArrayHelper::map($pmdata,'id', 'usernameChn'), ['prompt'=>'请选择','class' => 'form-control select'])?>
+        <?=Html::error($model , 'pmid', ['class' => 'error'])?>
     </div>
 </div>
