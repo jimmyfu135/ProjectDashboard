@@ -25,7 +25,7 @@ $this->title = 'My Yii Application';
 
 <ul class="nav nav-tabs">
     <li class="active">
-        <a href="#tab_requirementCalendar" data-toggle="tab">需求视图</a>
+        <a id="navRequirement" href="#tab_requirementCalendar" data-toggle="tab">需求视图</a>
     </li>
     <li>
         <a id="navResource" href="#tab_resourceCalendar" data-toggle="tab">资源视图</a>
@@ -37,6 +37,7 @@ $this->title = 'My Yii Application';
         <div id="requirementCalendar"></div>
     </div>
     <div style="margin-top: 5px;" class="tab-pane fade" id='tab_resourceCalendar'>
+        <div id="resourceLegend" style="text-align: center;"></div>
         <div id="resourceCalendar"></div>
     </div>
 </div>

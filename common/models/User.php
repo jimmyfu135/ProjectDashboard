@@ -191,4 +191,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public static function userListByDepartname($departName){
+        $sql = 'select a.id,a.usernameChn,a.color from `user` a LEFT JOIN department b on a.departid = b.id where b.`name` = :departname';
+        return User::findBySql($sql)->addParams([':departname' => $departName])->asArray()->all();
+    }
 }

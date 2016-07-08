@@ -2,7 +2,8 @@
  * Created by fuj01 on 2016/6/21.
  */
 $(document).ready(function() {
-
+    //展示图例
+    showLegend();
     $('#requirementCalendar').fullCalendar({
         lang:'zh-cn',//引入语言包
         header: {
@@ -60,6 +61,7 @@ $(document).ready(function() {
         },
         selectable: true,
         selectHelper: true,
+        eventOrder:'userid',
         events: function (start,end,timezone,callback) {
             var abuName = "";
             $("#select2 dd").each(function () {
@@ -94,6 +96,37 @@ $(document).ready(function() {
             //console.log("加载了111");
             $("#resourceCalendar").fullCalendar('render');
             resourceCalendarIsloaded = true;
+        }else {
+            $('#resourceCalendar').fullCalendar('refetchEvents');
         }
     });
+
+    $("#navRequirement").on('shown.bs.tab',function(e) {
+        $('#requirementCalendar').fullCalendar('refetchEvents');
+    });
 });
+
+function showLegend() {
+    var abuName = "";
+    $("#select2 dd").each(function () {
+        if($(this).hasClass("selected")){
+            abuName = $(this).text();
+            return false;
+        }
+    });
+    $.ajax({
+        url:'index.php?r=site/user-list&abuname=' + abuName,
+        success:function (data) {
+            var events = [];
+            events = JSON.parse(data);
+            console.log(events);
+            //加载图例
+            var legendHTML = "";
+            $("#resourceLegend").empty();
+            for(var i = 0;i<events.length;i++) {
+                legendHTML += "<label style='margin-right: 5px;border-radius: 5px;background-color: " + events[i].color + ";width: 50px;'>" + events[i].usernameChn + "</label>";
+            }
+            $("#resourceLegend").append(legendHTML);
+        }
+    });
+}

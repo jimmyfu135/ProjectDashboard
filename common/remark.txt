@@ -1,0 +1,9 @@
+颜色值：
+#FF0000 red
+#FFA500 orange
+#FFFF00 yellow
+#008000 green
+#00FFFF cyan
+#0000FF blue
+#800080 purple
+

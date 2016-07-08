@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use common\models\User;
 use Yii;
 use yii\helpers\Json;
 use yii\web\Controller;
@@ -40,6 +41,10 @@ class SiteController extends Controller
                     ],
                     [
                         'actions' => ['task-calendar-list', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['user-list', 'error'],
                         'allow' => true,
                     ],
                 ],
@@ -125,6 +130,12 @@ class SiteController extends Controller
         //获取组的参数
         $departName = $_GET["abuname"];
         $calendarList = Task::taskCalendarList($departName);
+        return Json::encode($calendarList);
+    }
+
+    public  function actionUserList(){
+        $departName = $_GET["abuname"];
+        $calendarList = User::userListByDepartname($departName);
         return Json::encode($calendarList);
     }
 }
