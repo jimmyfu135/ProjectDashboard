@@ -75,4 +75,29 @@ class LoginForm extends Model
 
         return $this->_user;
     }
+    
+    /*
+     * 登录或登出的时候  设置session
+     */
+    public function setMySession($isLogin)
+    {
+        $userid=yii::$app->user->id;
+        if($isLogin==true){
+            $session = \Yii::$app->session;
+            $user=new User();
+            $user=User::findIdentity($userid);
+            $session->set('username' , $user->usernameChn);
+            $session->set('userid' ,$userid);
+            $session->set('usercode' ,$user->username);
+            $session->set('departid' ,$user->departid);
+            $session->set('careerdepartmentid' ,$user->careerdepartmentid);
+        }else{
+            $session = \Yii::$app->session;
+    
+            //删除所有session
+            $session->removeAll();
+        }
+        return true;
+    }
+    
 }

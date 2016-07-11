@@ -82,7 +82,7 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->login() && LoginForm::setMySession(true)) {
             return $this->goBack();
         } else {
             return $this->render('login', [
@@ -94,10 +94,10 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
+        LoginForm::setMySession(false);
         return $this->goHome();
     }
-
+    
     //返回日志表的数据
     public  function actionRequirementCalendarList(){
         /*$calendarList = [
