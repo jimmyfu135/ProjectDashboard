@@ -39,7 +39,8 @@ $(document).ready(function() {
         select: function(start, end) {
             var formatStart = start.format();
             var formatEnd = end.format();
-            showProjModal(formatStart,formatEnd);
+            var preEnd = calDate(formatEnd);
+            showProjModal(formatStart,preEnd);
             //$('#calendar').fullCalendar('unselect');
         },
         eventClick:function (calEvent,jsEvent,view) {
@@ -82,7 +83,8 @@ $(document).ready(function() {
         select: function(start, end) {
             var formatStart = start.format();
             var formatEnd = end.format();
-            addTaskModal(formatStart,formatEnd);
+            var preEnd = calDate(formatEnd);
+            addTaskModal(formatStart,preEnd);
         },
         eventClick:function (calEvent,jsEvent,view) {
             editTaskModal(calEvent.id);
@@ -129,4 +131,16 @@ function showLegend() {
             $("#resourceLegend").append(legendHTML);
         }
     });
+}
+
+//计算date的前一天
+//传入的date参数格式必须为：XXXX-XX-XX
+function calDate(date) {
+    var arrDate = date.split("-");
+    var newDate = new Date();
+    newDate.setFullYear(arrDate[0]);
+    newDate.setMonth(arrDate[1]);
+    newDate.setDate(arrDate[2]);
+    var preDate = new Date(newDate.getTime() - 24*60*60*1000);  //前一天
+    return preDate.getFullYear() + "-" + (preDate.getMonth() < 10 ? "0"+preDate.getMonth():preDate.getMonth()) + "-" + (preDate.getDate() < 10 ? "0"+preDate.getDate():preDate.getDate());
 }
