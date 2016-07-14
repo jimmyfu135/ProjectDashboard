@@ -1,6 +1,5 @@
 <?php
 use yii\helpers\Html;
-$this->registerJsFile('js/taskproject.js',['depends' => ['backend\assets\AppAsset']]);
 $this->registerCssFile('@web/css/public.css');
 ?>
 <div class="inner-container">

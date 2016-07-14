@@ -26,12 +26,12 @@ function submitAddTaskProj(){
 
 function submitEditTaskProj(id){
 	var $form = $('#editForm');
-	submitProjPlan('index.php?r=taskproject/edittaskproj&id='+id, $form.serialize());
+	submitTaskProj('index.php?r=taskproject/edittaskproj&id='+id, $form.serialize());
 }
 
 function submitDelTaskProj(id){
 	var $form = $('#addForm');
-	submitProjPlan('index.php?r=taskproject/deltaskproj&id='+id, $form.serialize());
+	submitTaskProj('index.php?r=taskproject/deltaskproj&id='+id, $form.serialize());
 }
 
 

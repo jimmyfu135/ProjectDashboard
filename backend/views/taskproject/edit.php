@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 $this->registerCssFile('@web/css/public.css');
-$this->registerJsFile('js/taskproject.js',['depends' => ['backend\assets\AppAsset']]);
+
 ?>
 <div class="inner-container">
     <?=Html::beginForm('', 'post' , ['enctype' => 'multipart/form-data' , 'class' => 'form-horizontal' , 'id' =>'editForm' ])?>
