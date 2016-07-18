@@ -21,8 +21,8 @@ $(document).ready(function() {
         //events: 'index.php?r=site/calendar-list',
         events:function (start,end,timezone,callback) {
             var abuName = "";
-            $("#select2 dd").each(function () {
-                if($(this).hasClass("selected")){
+            $("#navul li").each(function () {
+                if($(this).hasClass("active")){
                     abuName = $(this).text();
                     return false;
                 }
@@ -64,8 +64,8 @@ $(document).ready(function() {
         eventOrder:'userid',
         events: function (start,end,timezone,callback) {
             var abuName = "";
-            $("#select2 dd").each(function () {
-                if($(this).hasClass("selected")){
+            $("#navul li").each(function () {
+                if($(this).hasClass("active")){
                     abuName = $(this).text();
                     return false;
                 }
@@ -110,8 +110,8 @@ $(document).ready(function() {
 
 function showLegend() {
     var abuName = "";
-    $("#select2 dd").each(function () {
-        if($(this).hasClass("selected")){
+    $("#navul li").each(function () {
+        if($(this).hasClass("active")){
             abuName = $(this).text();
             return false;
         }

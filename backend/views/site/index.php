@@ -12,15 +12,11 @@ $this->registerJsFile('@web/js/taskproject.js',['depends' => ['backend\assets\Ap
 $this->title = 'My Yii Application';
 ?>
 
-<ul class="select">
-    <li class="select-list">
-        <dl id="select2">
-            <dt>ABU：</dt>
-            <dd class="select-all selected"><a href="#">上海一组</a></dd>
-            <dd><a href="#">上海二组</a></dd>
-            <dd><a href="#">上海三组</a></dd>
-        </dl>
-    </li>
+<ul id="navul" class="navfilter">
+    <!--<li class="active">全部</li>-->
+    <li class="active">上海一组</li>
+    <li>上海二组</li>
+    <li>上海三组</li>
 </ul>
 
 <ul class="nav nav-tabs">

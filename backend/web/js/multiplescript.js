@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
-	$("#select2 dd").click(function () {
-		$(this).addClass("selected").siblings().removeClass("selected");
+	$('.navfilter li').on('click', function() {
+		$(this).toggleClass('active').siblings().removeClass('active');
 		//重新获取所有事件数据
 		$('#requirementCalendar').fullCalendar('refetchEvents');
 		$('#resourceCalendar').fullCalendar('refetchEvents');

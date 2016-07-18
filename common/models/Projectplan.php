@@ -57,6 +57,11 @@ class Projectplan extends ActiveRecord{
         ];
     }
 
+    /*
+     * 获取需求日历列表
+     * $param string $departName abu名称
+     * return array 需求列表
+     * */
     public static function requirementCalendarList($departName){
         //return Projectplan::find()->all();
         $sql = 'select id,`subject` as `title`, date_format(`begindate`,\'%Y-%m-%d\') as `start`,date_format(`enddate`,\'%Y-%m-%d\') as `end` from v_projectplan where departname = :departname';
