@@ -6,6 +6,8 @@ use yii\bootstrap\Modal;
 //FullCalendarAsset::register($this);
 
 $this->registerJsFile('@web/js/site.js',['depends' => ['backend\assets\FullCalendarAsset']]);
+$this->registerJsFile('@web/fullcalendar/scheduler.js',['depends' => ['backend\assets\FullCalendarAsset']]);
+$this->registerCssFile('@web/fullcalendar/scheduler.css',['depends' => ['backend\assets\FullCalendarAsset']]);
 AppAsset::addMultipleSelect($this,'@web/js/multiplescript.js','@web/css/multipleselect.css');
 $this->registerJsFile('@web/js/projectplan.js',['depends' => ['backend\assets\AppAsset']]);
 $this->registerJsFile('@web/js/taskproject.js',['depends' => ['backend\assets\AppAsset']]);
@@ -33,7 +35,6 @@ $this->title = 'My Yii Application';
         <div id="requirementCalendar"></div>
     </div>
     <div style="margin-top: 5px;" class="tab-pane fade" id='tab_resourceCalendar'>
-        <div id="resourceLegend" style="text-align: center;"></div>
         <div id="resourceCalendar"></div>
     </div>
 </div>

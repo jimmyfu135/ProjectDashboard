@@ -4,8 +4,7 @@ $(document).ready(function(){
 		$(this).toggleClass('active').siblings().removeClass('active');
 		//重新获取所有事件数据
 		$('#requirementCalendar').fullCalendar('refetchEvents');
+		$('#resourceCalendar').fullCalendar('refetchResources');
 		$('#resourceCalendar').fullCalendar('refetchEvents');
-		//展示图例
-		showLegend();
 	});
 });

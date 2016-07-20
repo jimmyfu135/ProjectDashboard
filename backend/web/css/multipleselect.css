@@ -1,5 +1,5 @@
 /* select */
 #navul { list-style-type: none;}
-.navfilter { width: 1000px; margin: 0 auto 20px; text-align: center; font-size: 0;}
+.navfilter { margin: 0 auto 20px; text-align: center; font-size: 0;}
 .navfilter li { display: inline-block; margin: 0 5px; padding: 10px 20px; font-size: 14px; color: #333; background-color: #ccc; cursor: pointer;}
 .navfilter .active { color: #fff; background-color: #21b384;}

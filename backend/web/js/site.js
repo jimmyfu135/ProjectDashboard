@@ -2,9 +2,9 @@
  * Created by fuj01 on 2016/6/21.
  */
 $(document).ready(function() {
-    //展示图例
-    showLegend();
     $('#requirementCalendar').fullCalendar({
+        schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+        height: "auto",//高度根据内容自适应
         lang:'zh-cn',//引入语言包
         header: {
             left: 'prev,next today',
@@ -48,12 +48,15 @@ $(document).ready(function() {
     });
 
     $('#resourceCalendar').fullCalendar({
+        schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+        height: "auto",
         lang:'zh-cn',//引入语言包
         header: {
-            left: 'prev,next today',
+            left: 'today prev,next',
             center: 'title',
-            right: ''
+            right: 'timelineMonth'
         },
+        defaultView: 'timelineMonth',
         editable: true,
         dragOpacity: {
             agenda: .5,
@@ -61,7 +64,26 @@ $(document).ready(function() {
         },
         selectable: true,
         selectHelper: true,
-        eventOrder:'userid',
+        resourceAreaWidth: '10%',
+        resourceLabelText: '团队',
+        resourceGroupField: 'stationname',
+        resources: function (callback) {
+            var abuName = "";
+            $("#navul li").each(function () {
+                if($(this).hasClass("active")){
+                    abuName = $(this).text();
+                    return false;
+                }
+            });
+            $.ajax({
+                url:'index.php?r=site/user-list&abuname=' + abuName,
+                success:function (data) {
+                    var events = [];
+                    events = JSON.parse(data);
+                    callback(events);
+                }
+            });
+        },
         events: function (start,end,timezone,callback) {
             var abuName = "";
             $("#navul li").each(function () {
@@ -99,36 +121,9 @@ $(document).ready(function() {
         }else {
             $('#resourceCalendar').fullCalendar('refetchEvents');
         }
-        //展示图例
-        showLegend();
     });
 
     $("#navRequirement").on('shown.bs.tab',function(e) {
         $('#requirementCalendar').fullCalendar('refetchEvents');
     });
 });
-
-function showLegend() {
-    var abuName = "";
-    $("#navul li").each(function () {
-        if($(this).hasClass("active")){
-            abuName = $(this).text();
-            return false;
-        }
-    });
-    $.ajax({
-        url:'index.php?r=site/user-list&abuname=' + abuName,
-        success:function (data) {
-            var events = [];
-            events = JSON.parse(data);
-            console.log(events);
-            //加载图例
-            var legendHTML = "";
-            $("#resourceLegend").empty();
-            for(var i = 0;i<events.length;i++) {
-                legendHTML += "<label style='margin-right: 5px;border-radius: 5px;background-color: " + events[i].color + ";width: 50px;'>" + events[i].usernameChn + "</label>";
-            }
-            $("#resourceLegend").append(legendHTML);
-        }
-    });
-}
