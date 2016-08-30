@@ -24,9 +24,9 @@ $this->registerJsFile('@web/js/addtask.js',['depends' => ['backend\assets\AppAss
 		<!--可编辑表格-->
 		<div class="tab-pane fade in active" id="tab2">
 			<table class="table table-striped table-hover" id="reportTable"></table>
-			<a href="javascript:addRow()" class="btn btn-primary">新增</a>
-			<a href="<?="javascript:Save('$modelTask->id')"?>"" class="btn btn-primary">提交</a>
-
+			<p style="text-align:right;">
+				<a href="<?="javascript:Save('$modelTask->id')"?>"" class="btn btn-primary">提交</a>
+			</p>
 		</div>
 	</div>
 </div>

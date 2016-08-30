@@ -62,8 +62,8 @@ $(function(){
 
     $('#addRowbtn').click(function(){
         var data = {
-            user_email:'text@163.com',
-            user_version:2
+            stationname:'',
+            workload:0
         };
         $('#reportTable').bootstrapTable('append',data);
 
@@ -77,6 +77,7 @@ $(function(){
         forceParse: 1,
         language:'zh-CN',
         format: 'yyyy-mm-dd',
+        formatViewType:'time',
         pickerPosition: 'bottom-left',
         showMeridian: 1
     });
@@ -86,24 +87,15 @@ function removeRow(rowIndex){
 }
 function addRow(){
     var data = {
-        user_email:'text@163.com',
-        user_version:2
+        stationname:'',
+        workload:0
     };
     $('#reportTable').bootstrapTable('append',data);
 }
 
 function initiUserList(stationname,a,b,c,d,e,f,g){
-    //TODO
+    //TODO--联动效果
     return;
-    $('#order_status1').bootstrapSelect({
-        data:[{id:1,text:'lzx'},{id:2,text:'lsl'}],
-        //url:'',
-        downBorder:true,
-        multiple:true,//多选
-        onSelect:function(val,rec){
-
-        }
-    });
 }
 //ajax获取已经保存了的数据
 function getSavedData(){
@@ -118,7 +110,7 @@ function getSavedData(){
         }
     });
     if(rtn.length==0){
-        rtn={"stationname":"请选择","userid":"","begindate":"","enddate":"","workload":""}
+        rtn=[{"stationname":"请选择","userid":"","begindate":"","enddate":"","workload":""}]
     }
     return rtn;
 }
@@ -126,8 +118,8 @@ function getSavedData(){
 function Save(taskid){
     var datas="";
     var Rows=$("#reportTable")[0].rows;
-    $.each(Rows, function(i, item) {
-        if (i != 0) {
+    $.each(Rows, function(i, item) {debugger;
+        if (i != 0 && item.cells[0].innerText!="没有找到匹配的记录") {
             datas +=JSON.stringify({
                 "stationname":item.cells[0].innerText,
                 "userid":item.cells[1].innerText,
@@ -137,8 +129,11 @@ function Save(taskid){
             })+"|";
         }
     });
-    var url="index.php?r=task/ajaxsavetask&taskid="+taskid;
 
+    var url="index.php?r=task/ajaxsavetask&taskid="+taskid;
+    if(datas==""){
+        datas="|";
+    }
     $.ajax({
         url: url,
         type: 'post',

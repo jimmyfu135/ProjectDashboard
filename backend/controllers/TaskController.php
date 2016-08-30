@@ -88,6 +88,7 @@ class TaskController extends Controller{
 		}
 		//添加用户
 		$data= file_get_contents("php://input");
+
 		$arrTaskAssign=explode('|',$data);
 		foreach($arrTaskAssign as $u){
 			if($u!=""){
@@ -95,8 +96,8 @@ class TaskController extends Controller{
 				$taskmodel=new Task();
 				$taskmodel->taskid=$taskid;
 				//substr($model->begindate,0,10)
-				$taskmodel->begindate=substr($taskinfoObj->{"begindate"},0,10);
-				$taskmodel->enddate=substr($taskinfoObj->{"enddate"},0,10);
+				$taskmodel->begindate=$taskinfoObj->{"begindate"};
+				$taskmodel->enddate=$taskinfoObj->{"enddate"};
 				$taskmodel->stationname=$taskinfoObj->{"stationname"};
 				$taskmodel->workload=$taskinfoObj->{"workload"};
 				$userid=User::findIDByUsernameChn($taskinfoObj->{"userid"});
