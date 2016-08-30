@@ -117,8 +117,9 @@ class ProjectplanController extends Controller
                 $sqlopreateuser='select `user`.id from user where careerdepartmentid=:careerdepartmentid and id=:loginuserid and :departid=:departid ';
             }
             $currentprojdepart=User::findBySql($sqlopreateuser,[':departid'=>$model->departid,':careerdepartmentid'=>$model->careerdepartid,':loginuserid'=>$loginuserid])->asArray()->all();
-            
-            if(count($task)>0 || count($currentprojdepart)==0){
+
+            // if(count($task)>0 || count($currentprojdepart)==0){
+            if(count($currentprojdepart)==0){
                 return $this->renderAjax('viewprojplan', [
                 'model' => $model,
                 'pmdata' => $pmdata,

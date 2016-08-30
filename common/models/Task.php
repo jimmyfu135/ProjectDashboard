@@ -3,6 +3,7 @@
 namespace common\models;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use yii;
 
 /**
  * This is the model class for table "taskassign".
@@ -34,8 +35,8 @@ class Task extends ActiveRecord{
 			//[['begindate', 'enddate'], 'date', 'message' => '日期格式不合法'],
 			['workload' , 'number', 'min' => 0, 'message' => '请录入数值', 'tooSmall' => '请录入大于0的数值'],
 			['workload' , 'required','message' => '请录入工作量'],
-			['taskstatus' , 'required','message' => '请选择任务状态'],
-			['stationname' , 'required','message' => '请选择岗位'],
+			//['taskstatus' , 'required','message' => '请选择任务状态'],
+			//['stationname' , 'required','message' => '请选择岗位'],
 		];
 	}
 
@@ -68,6 +69,14 @@ class Task extends ActiveRecord{
 	public static function geAlltUser()
 	{
 		return ArrayHelper::index(User::find()->select('id,usernameChn')->asArray()->all(), 'id');
+	}
+
+	public static function getTeamUser($departid){
+		$sql = 'select usernameChn as text,id from user where departid = :departid';
+		$teamuser = User::findBySql($sql)->addParams([
+			':departid' => $departid
+		])->asArray()->all();
+		return yii\helpers\Json::encode($teamuser);
 	}
 
 	public static function taskCalendarList($departName){

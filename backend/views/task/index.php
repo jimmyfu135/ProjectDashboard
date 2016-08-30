@@ -1,36 +1,32 @@
 <?php
    use yii\widgets\Breadcrumbs;
 	use yii\helpers\Url;
+	use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
     use yii\bootstrap\Modal;
-     use yii\widgets\LinkPager;
+	use yii\widgets\LinkPager;
+
+$this->registerJsFile('/ProjectDashboard/common/editgrid/plus/import.inc.js',['depends' => ['backend\assets\AppAsset']]);
+$this->registerJsFile('@web/js/addtask.js',['depends' => ['backend\assets\AppAsset']]);
+
 ?>
 <style>
 	.inner-container{font-family:Microsoft YaHei}
 </style>
 <div class="inner-container">
 <p style="text-align:right;">
-	<a href="<?=Url::to(['add','taskid'=>$modelTask->id])?>" class="btn btn-primary">指派任务</a>
 	<a href="<?=Url::to(['site/index'])?>" class="btn btn-primary">返回首页</a>
 </p>
-<table class="table table-hover">
-	<caption><h4>需求：<small><strong><?=$modelTask->subject?></strong></small></h4></caption>
-<tr>
-	<th>人员</th><th>岗位</th><th>工作量</th><th>计划开始日期</th><th>计划完成日期</th><th>状态</th><th>修改日期</th><th>操作</th>
-</tr>
-<?php foreach($data as $v){?>
-<tr>
-	<td><?=isset($categorys[$v['userid']])  ? $categorys[$v['userid']]['usernameChn'] : '用户不存在';?></td>
-	<td><?=$v->stationname?></td>
-	<td><?=$v->workload?></td>
-	<td><?=$v->begindate?></td>
-	<td><?=$v->enddate?></td>
-	<td><?=isset($taskstatus[$v['taskstatus']])  ? $taskstatus[$v['taskstatus']]['name'] : '无';?></td>
-	<td><?=date('Y-m-d' , $v['updated_at'])?></td>
-	<td><a href="<?=Url::to(['edit' , 'id'=>$v->id,'taskid'=>$modelTask->id])?>" class="data_op data_edit">编辑</a> | <a href="<?=Url::to(['delete' , 'id'=>$v->id,'taskid'=>$modelTask->id]) ?>" class="data_op data_delete">删除</a></td>
-</tr>
-<?php }?>
-</table>
-	<?=LinkPager::widget([
-		'pagination' => $pagination,
-	])?>
+	<caption><h4>需求：<small><strong><span id="cl"> <?=$modelTask->subject?></span></strong></small></h4></caption>
+	<input type="hidden" style="display:none" id="teamUserJson" value='<?= $teamUser ?>'> </input>
+	<input type="hidden" style="display:none" id="taskid" value='<?= $modelTask->id ?>'> </input>
+	<div id="myTabContent" class="tab-content">
+		<!--可编辑表格-->
+		<div class="tab-pane fade in active" id="tab2">
+			<table class="table table-striped table-hover" id="reportTable"></table>
+			<a href="javascript:addRow()" class="btn btn-primary">新增</a>
+			<a href="<?="javascript:Save('$modelTask->id')"?>"" class="btn btn-primary">提交</a>
+
+		</div>
+	</div>
 </div>

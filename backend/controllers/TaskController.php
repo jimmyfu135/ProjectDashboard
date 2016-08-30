@@ -10,11 +10,11 @@ use yii\helpers\Html;
 use yii\data\Pagination;
 use common\models\CommConfigData;
 
-use Yii;
+use yii;
 
 
 class TaskController extends Controller{
-
+	public $enableCsrfValidation = false;
 	public function actionIndex()
 	{
 		$taskid = yii::$app->getRequest()->getQueryParam('taskid');
@@ -27,10 +27,12 @@ class TaskController extends Controller{
 		$modelTask = Taskproject::findOne($taskid);
 		$pagination = new Pagination(['totalCount' => $user->count(), 'pageSize' => 5]);
 		$data = $user->offset($pagination->offset)->limit($pagination->limit)->all();
+		//获取当前任务下的所有用户信息
+
 		//获取任务状态
 		$myCommConfigData = new CommConfigData();
 		$taskStatus = $myCommConfigData->getTaskStatus();
-		return $this->render('index', ['data' => $data, 'modelTask' => $modelTask, 'pagination' => $pagination, 'categorys' => Task::geAlltUser(), 'taskstatus' => $taskStatus]);
+		return $this->render('index', ['data' => $data, 'modelTask' => $modelTask, 'pagination' => $pagination, 'categorys' => Task::geAlltUser(), 'taskstatus' => $taskStatus,'teamUser'=>Task::getTeamUser($modelTask->departid)]);
 	}
 
 
@@ -75,8 +77,51 @@ class TaskController extends Controller{
 
 		return $this->redirect(['index', 'taskid' => $taskid]);
 	}
+	//保存任务
+	public function actionAjaxsavetask(){
 
+		$taskid = yii::$app->getRequest()->getQueryParam('taskid');
+		//1.删除当前计划下的所有任务指派
+		$taskassign=Task::findBySql("select id from taskassign where taskid=:taskid")->addParams([':taskid'=>$taskid])->asArray()->all();
+		foreach($taskassign as $id){
+			Task::findOne($id)->delete();
+		}
+		//添加用户
+		$data= file_get_contents("php://input");
+		$arrTaskAssign=explode('|',$data);
+		foreach($arrTaskAssign as $u){
+			if($u!=""){
+				$taskinfoObj=json_decode($u);
+				$taskmodel=new Task();
+				$taskmodel->taskid=$taskid;
+				//substr($model->begindate,0,10)
+				$taskmodel->begindate=substr($taskinfoObj->{"begindate"},0,10);
+				$taskmodel->enddate=substr($taskinfoObj->{"enddate"},0,10);
+				$taskmodel->stationname=$taskinfoObj->{"stationname"};
+				$taskmodel->workload=$taskinfoObj->{"workload"};
+				$userid=User::findIDByUsernameChn($taskinfoObj->{"userid"});
+				$taskmodel->userid=$userid;
+				$taskmodel->taskstatus="1";
+				$taskmodel->save();
+			}
+		}
+		return "ok";
+		/*
 
+		$taskid=76;
+		$taskassign=Task::findBySql("select id from taskassign where taskid=:taskid")->addParams([':taskid'=>$taskid])->asArray()->all();
+		foreach($taskassign as $id){
+			Task::findOne($id)->delete();
+		}
+		return "ok";
+		*/
+	}
+	//获取任务
+	public  function actionGettask(){
+		$taskid = yii::$app->getRequest()->getQueryParam('taskid');
+		$taskassign=Task::findBySql("select stationname ,userid ,begindate,enddate,workload from taskassign where taskid=:taskid")->addParams([':taskid'=>$taskid])->asArray()->all();
+		return yii\helpers\Json::encode($taskassign);
+	}
 	public function actionDelete($id)
 	{
 		$id = (int)$id;
