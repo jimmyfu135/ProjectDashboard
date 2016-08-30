@@ -14,11 +14,11 @@ use yii\base\Widget;
  		
 		<div class="form-group">
             <div class="control-label col-sm-2 col-md-2">
-            	<a href="<?=Url::to(['taskproject/assignedtask','id'=>$model->id])?>" class="btn btn-primary">指派</a>
-            </div>
+
+			</div>
 			<div class="control-label col-sm-2 col-md-2"></div>
             <div class="control-label col-sm-2 col-md-7">
-            	<a href="<?="javascript:submitDelProjPlan('$model->id')"?>" class="btn btn-primary">删除</a>
+            	
 		 		<a href="<?="javascript:submitEditProjPlan('$model->id')"?>" class="btn btn-primary">提交</a>
 				<a href="#" class="btn btn-primary" data-dismiss="modal">关闭</a>
             </div>

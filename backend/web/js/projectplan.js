@@ -101,3 +101,34 @@ function changecareerdepart(){
 function submitSendTask(id){
 	alert(id);
 }
+
+//关闭popover
+function closePopover(id) {
+	$("a[aria-describedby='" + id + "']").popover('hide');
+}
+
+//编辑需求
+function editProj(event){
+	var id = event.path[3].id;
+	closePopover(id);
+	//调用编辑方法
+	var pid = $("input[type=hidden]",$("#"+id+"")).val();
+	editProjPlan(pid);
+}
+
+//指派需求
+function designProj(event) {
+	var id = event.path[3].id;
+	closePopover(id);
+	//调用指派方法
+	var pid = $("input[type=hidden]",$("#"+id+"")).val();
+
+}
+
+//删除需求
+function  delProj(event) {
+	var id = event.path[3].id;
+	var pid = $("input[type=hidden]",$("#"+id+"")).val();
+	submitDelProjPlan(pid);
+	closePopover(id);
+}

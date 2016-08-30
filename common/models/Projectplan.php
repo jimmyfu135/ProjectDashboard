@@ -67,9 +67,13 @@ class Projectplan extends ActiveRecord{
         //return Projectplan::find()->all();
         $sql = "";
         if ($departName == "全部") {
-            $sql = 'select id,`subject` as `title`, date_format(`begindate`,\'%Y-%m-%d\') as `start`,date_format(`enddate`,\'%Y-%m-%d\') as `end` from v_projectplan';
+            $sql = 'select id,`title`, date_format(`begindate`,\'%Y-%m-%d\') as `start`,date_format(`enddate`,\'%Y-%m-%d\') as `end`
+ ,`subject`,chargeusername,pmusername,projecttype,workload,projectlevel
+from v_projectplan';
         } else {
-            $sql = 'select id,`subject` as `title`, date_format(`begindate`,\'%Y-%m-%d\') as `start`,date_format(`enddate`,\'%Y-%m-%d\') as `end` from v_projectplan where departname = :departname';
+            $sql = 'select id,`title`, date_format(`begindate`,\'%Y-%m-%d\') as `start`,date_format(`enddate`,\'%Y-%m-%d\') as `end`
+ ,`subject`,chargeusername,pmusername,projecttype,workload,projectlevel
+from v_projectplan where departname = :departname';
         }
         return Projectplan::findBySql($sql)->addParams([':departname' => $departName])->asArray()->all();
     }

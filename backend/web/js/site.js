@@ -42,9 +42,40 @@ $(document).ready(function() {
             showProjModal(formatStart,formatEnd);
             //$('#calendar').fullCalendar('unselect');
         },
-        eventClick:function (calEvent,jsEvent,view) {
-            editProjPlan(calEvent.id);
-        }        
+        eventRender: function (event, element) {
+            element.popover({
+                title: function () {
+                    return "<B>" + event.subject + "</B>";
+                },
+                placement:'auto',
+                html:true,
+                trigger : 'click',
+                animation : 'true',
+                content: function () {
+                    return "<div>" +
+                            "计划开始时间：" + event.start.format() +
+                        "<br />计划结束时间：" + event.end.format() +
+                        "<br />需求提交人：" + event.chargeusername +
+                        "<br />需求PM：" + event.pmusername +
+                        "<br />需求类型：" + event.projecttype +
+                        "<br />预计工作量：" + event.workload +
+                        "<br />需求级别：" + event.projectlevel +
+                        "<br /><input type='hidden' id='testid' value='" + event.id + "' />" +
+                        "</div>" +
+                    "<div style='text-align: right;margin-top: 10px;'>" +
+                    "<button type='button' onclick='designProj(event);' class='btn btn-primary btn-xs'>指派</button>" +
+                    "<button style='margin-left: 8px;' onclick='editProj(event);' type='button' class='btn btn-default btn-xs'>编辑</button>" +
+                    "<button style='margin-left: 8px;' onclick='delProj(event);' type='button' class='btn btn-default btn-xs'>删除</button>" +
+                    "</div>";
+                },
+                container:'body'
+            });
+            $('body').on('click', function (e) {
+                if (!element.is(e.target) && element.has(e.target).length === 0 && $('.popover').has(e.target).length === 0)
+                    //冒泡
+                    element.popover('hide');
+            });
+        }
     });
 
     $('#resourceCalendar').fullCalendar({
