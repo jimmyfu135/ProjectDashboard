@@ -122,7 +122,7 @@ function designProj(event) {
 	closePopover(id);
 	//调用指派方法
 	var pid = $("input[type=hidden]",$("#"+id+"")).val();
-
+	window.open("index.php?r=taskproject/assignedtask&id="+pid);
 }
 
 //删除需求
