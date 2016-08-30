@@ -15,8 +15,8 @@ $this->title = 'My Yii Application';
 ?>
 
 <ul id="navul" class="navfilter">
-    <!--<li class="active">全部</li>-->
-    <li class="active">上海一组</li>
+    <li class="active">全部</li>
+    <li>上海一组</li>
     <li>上海二组</li>
     <li>上海三组</li>
 </ul>

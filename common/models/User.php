@@ -203,10 +203,18 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     public static function userListByDepartname($departName){
-        $sql = 'select a.id,c.`name` as `stationname`,a.usernameChn as `title`,a.color as `eventColor` from `user` a 
+        $sql = "";
+        if ($departName == "全部") {
+            $sql = 'select a.id,c.`name` as `stationname`,a.usernameChn as `title`,a.color as `eventColor` from `user` a 
+LEFT JOIN department b on a.departid = b.id 
+LEFT JOIN station c on a.stationid = c.id
+where c.id in (3,4)';
+        }else {
+            $sql = 'select a.id,c.`name` as `stationname`,a.usernameChn as `title`,a.color as `eventColor` from `user` a 
 LEFT JOIN department b on a.departid = b.id 
 LEFT JOIN station c on a.stationid = c.id
 where c.id in (3,4) AND b.`name` = :departname';
+        }
         return User::findBySql($sql)->addParams([':departname' => $departName])->asArray()->all();
     }
 }
