@@ -50,7 +50,7 @@ $(document).ready(function() {
                 placement:'auto',
                 html:true,
                 trigger : 'click',
-                animation : 'true',
+                animation : 'false',
                 content: function () {
                     return "<div>" +
                             "计划开始时间：" + event.start.format() +
@@ -60,7 +60,7 @@ $(document).ready(function() {
                         "<br />需求类型：" + event.projecttype +
                         "<br />预计工作量：" + event.workload +
                         "<br />需求级别：" + event.projectlevel +
-                        "<br /><input type='hidden' id='testid' value='" + event.id + "' />" +
+                        "<br /><input type='hidden' value='" + event.id + "' />" +
                         "</div>" +
                     "<div style='text-align: right;margin-top: 10px;'>" +
                     "<button type='button' onclick='designProj(event);' class='btn btn-primary btn-xs'>指派</button>" +
@@ -69,7 +69,7 @@ $(document).ready(function() {
                     "</div>";
                 },
                 container:'body'
-            });
+            }).popover('show');
             $('body').on('click', function (e) {
                 if (!element.is(e.target) && element.has(e.target).length === 0 && $('.popover').has(e.target).length === 0)
                     //冒泡
