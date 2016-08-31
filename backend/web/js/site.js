@@ -43,13 +43,13 @@ $(document).ready(function() {
             //$('#calendar').fullCalendar('unselect');
         },
         eventRender: function (event, element) {
-            element.popover({
+            $(element).popover({
                 title: function () {
                     return "<B>" + event.subject + "</B>";
                 },
                 placement:'auto',
                 html:true,
-                trigger : 'click',
+                trigger : 'focus',
                 animation : 'false',
                 content: function () {
                     return "<div>" +
@@ -69,12 +69,15 @@ $(document).ready(function() {
                     "</div>";
                 },
                 container:'body'
-            }).popover('show');
+            });
             $('body').on('click', function (e) {
                 if (!element.is(e.target) && element.has(e.target).length === 0 && $('.popover').has(e.target).length === 0)
-                    //冒泡
-                    element.popover('hide');
+                    $(element).popover('hide');
             });
+        },
+        eventClick: function(calEvent, jsEvent, view) {
+            $this = $(this);
+            $this.popover('toggle');
         }
     });
 
