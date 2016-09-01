@@ -33,6 +33,7 @@ $(function(){
                 },title:"人员",align:"center",width:"120px"},
                 {field:"begindate",edit:{
                     type:'date',//日期
+                    format: 'yyyy-mm-dd',
                     required:true,
                     click:function(){
 

@@ -30,12 +30,12 @@ var common_css_files = [
  * 导入CSS文件
  */
 for(var i = 0; i < common_css_files.length; i++){
-	document.write("<link rel='stylesheet' type='text/css' href='/common/editgrid/"+common_css_files[i]+"'>");
+	document.write("<link rel='stylesheet' type='text/css' href='../editgrid/"+common_css_files[i]+"'>");
 }
 /**
  * 导入JS文件
  */
 for(var i = 0; i < common_js_files.length; i++){
-	document.write("<script type='text/javascript' src='/common/editgrid/"+common_js_files[i]+"'></script>");
+	document.write("<script type='text/javascript' src='../editgrid/"+common_js_files[i]+"'></script>");
 }
 

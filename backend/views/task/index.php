@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
     use yii\bootstrap\Modal;
 	use yii\widgets\LinkPager;
 
-$this->registerJsFile('/common/editgrid/plus/import.inc.js',['depends' => ['backend\assets\AppAsset']]);
+$this->registerJsFile('editgrid/plus/import.inc.js',['depends' => ['backend\assets\AppAsset']]);
 $this->registerJsFile('@web/js/addtask.js',['depends' => ['backend\assets\AppAsset']]);
 
 ?>
