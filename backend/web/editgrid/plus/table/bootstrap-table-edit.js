@@ -326,7 +326,7 @@
 				startView: 2,
 				forceParse: 0,
 				language:'zh-CN',
-				format: 'yyyy-mm-dd hh:ii:ss',
+				format: 'yyyy-mm-dd',
 				pickerPosition: 'bottom-left',
 		        showMeridian: 1
 		    });

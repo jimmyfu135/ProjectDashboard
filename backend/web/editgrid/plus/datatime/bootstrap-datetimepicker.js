@@ -892,6 +892,7 @@
           });
           return;
         }
+        //debugger;
         switch (target[0].nodeName.toLowerCase()) {
           case 'th':
             switch (target[0].className) {
@@ -1046,12 +1047,14 @@
                 type: 'changeDay',
                 date: this.viewDate
               });
-              if (this.viewSelect >= 2) {
+              //2-->0
+              if (this.viewSelect >= 0) {
                 this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
               }
             }
             var oldViewMode = this.viewMode;
-            this.showMode(-1);
+              //debugger
+            //this.showMode(-1);
             this.fill();
             if (oldViewMode == this.viewMode && this.autoclose) {
               this.hide();
@@ -1418,14 +1421,14 @@
     getDefaultFormat: function (type, field) {
       if (type == 'standard') {
         if (field == 'input')
-          return 'yyyy-mm-dd hh:ii';
+          return 'yyyy-mm-dd';
         else
-          return 'yyyy-mm-dd hh:ii:ss';
+          return 'yyyy-mm-dd';
       } else if (type == 'php') {
         if (field == 'input')
-          return 'Y-m-d H:i';
+          return 'Y-m-d';
         else
-          return 'Y-m-d H:i:s';
+          return 'Y-m-d';
       } else {
         throw new Error('Invalid format type.');
       }
@@ -1460,10 +1463,10 @@
         format = this.parseFormat('yyyy-mm-dd', type);
       }
       if (/^\d{4}\-\d{1,2}\-\d{1,2}[T ]\d{1,2}\:\d{1,2}$/.test(date)) {
-        format = this.parseFormat('yyyy-mm-dd hh:ii', type);
+        format = this.parseFormat('yyyy-mm-dd', type);
       }
       if (/^\d{4}\-\d{1,2}\-\d{1,2}[T ]\d{1,2}\:\d{1,2}\:\d{1,2}[Z]{0,1}$/.test(date)) {
-        format = this.parseFormat('yyyy-mm-dd hh:ii:ss', type);
+        format = this.parseFormat('yyyy-mm-dd', type);
       }
       if (/^[-+]\d+[dmwy]([\s,]+[-+]\d+[dmwy])*$/.test(date)) {
         var part_re = /([-+]\d+)([dmwy])/,

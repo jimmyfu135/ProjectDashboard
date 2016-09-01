@@ -120,7 +120,7 @@ class TaskController extends Controller{
 	//获取任务
 	public  function actionGettask(){
 		$taskid = yii::$app->getRequest()->getQueryParam('taskid');
-		$taskassign=Task::findBySql("select stationname ,userid ,begindate,enddate,workload from taskassign where taskid=:taskid")->addParams([':taskid'=>$taskid])->asArray()->all();
+		$taskassign=Task::findBySql("select stationname ,userid ,DATE_FORMAT(begindate,'%Y-%m-%d') as begindate,DATE_FORMAT(enddate,'%Y-%m-%d') as enddate,workload from taskassign where taskid=:taskid")->addParams([':taskid'=>$taskid])->asArray()->all();
 		return yii\helpers\Json::encode($taskassign);
 	}
 	public function actionDelete($id)

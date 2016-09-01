@@ -15,7 +15,7 @@ var common_js_files = [
                        'plus/table/bootstrap-table.min.js',
                        'plus/table/bootstrap-table-zh-CN.min.js',
                        'plus/table/bootstrap-table-edit.js',
-                       'plus/datatime/bootstrap-datetimepicker.min.js',
+                       'plus/datatime/bootstrap-datetimepicker.js',
                        'plus/datatime/bootstrap-datetimepicker.zh-CN.js',
                        'plus/bootstrap-select.js'
                    ];

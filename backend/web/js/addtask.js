@@ -33,19 +33,18 @@ $(function(){
                 },title:"人员",align:"center",width:"120px"},
                 {field:"begindate",edit:{
                     type:'date',//日期
-                    format: 'yyyy-mm-dd',
                     required:true,
                     click:function(){
 
                     }
-                },title:"开始时间",align:"center",width:"150px"},
+                },title:"开始时间",align:"center",width:"120px"},
                 {field:"enddate",edit:{
                     type:'date',//日期
                     required:true,
                     click:function(){
 
                     }
-                },title:"结束时间",align:"center",width:"150px"},
+                },title:"结束时间",align:"center",width:"120px"},
                 //工作量
                 {field:"workload",edit:{
                     type:'num',//日期
@@ -143,7 +142,7 @@ function Save(taskid){
             alert("指派完成！");
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
-            alert("status:"+XMLHttpRequest.status+",readyState:"+XMLHttpRequest.readyState+",textStatus:"+textStatus);
+            //alert("status:"+XMLHttpRequest.status+",readyState:"+XMLHttpRequest.readyState+",textStatus:"+textStatus);
         }
     });
 }
