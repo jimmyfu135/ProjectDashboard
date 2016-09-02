@@ -1,7 +1,7 @@
-function addTaskModal(bgnDate, enddate) {
+function addTaskModal(bgnDate, enddate,username,stationname) {
 	$(".modal-title").text("新增任务");
 	$.get("index.php?r=taskproject/addtaskproj&begindate=" + bgnDate
-		+ "&enddate=" + enddate, {}, function(data) {
+		+ "&enddate=" + enddate + "&name=" + username + "&stationname=" + stationname, {}, function(data) {
 		$('.modal-body').html(data);
 	});
 	$('#create-modal').modal('show');

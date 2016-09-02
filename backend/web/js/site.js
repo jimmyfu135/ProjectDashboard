@@ -135,10 +135,12 @@ $(document).ready(function() {
                 }
             });
         },
-        select: function(start, end) {
+        select: function(start, end,jsEvent,view,resource) {
             var formatStart = start.format();
             var formatEnd = end.format();
-            addTaskModal(formatStart,formatEnd);
+            var username = resource.title;
+            var stationname = resource.stationname;
+            addTaskModal(formatStart,formatEnd,username,stationname);
         },
         eventClick:function (calEvent,jsEvent,view) {
             editTaskModal(calEvent.id);
