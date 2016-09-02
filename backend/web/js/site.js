@@ -139,8 +139,9 @@ $(document).ready(function() {
             var formatStart = start.format();
             var formatEnd = end.format();
             var username = resource.title;
+            var userid= resource.id;
             var stationname = resource.stationname;
-            addTaskModal(formatStart,formatEnd,username,stationname);
+            addTaskModal(formatStart,formatEnd,username,stationname,userid);
         },
         eventClick:function (calEvent,jsEvent,view) {
             editTaskModal(calEvent.id);

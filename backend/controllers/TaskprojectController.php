@@ -53,8 +53,15 @@ class TaskprojectController extends Controller{
 			//传递过来的开始时间和结束时间
 			$begindate = yii::$app->getRequest()->getQueryParam('begindate');
 			$enddate = yii::$app->getRequest()->getQueryParam('enddate');
+			$userid=yii::$app->getRequest()->getQueryParam('userid');
+			$stationname=yii::$app->getRequest()->getQueryParam("stationname");
 			$model->begindate = $begindate;
 			$model->enddate = $enddate;
+			$model->userid=$userid;
+			if($stationname=="研发"){
+				$stationname="开发";
+			}
+			$model->stationname=$stationname;
 		}
 		return $this->renderAjax('add', ['model' => $model, 'categorys' => Task::getUser(), 'modelTask' => $modelTask, 'taskstatus' => $taskStatus]);
 	}

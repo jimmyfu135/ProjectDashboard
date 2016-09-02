@@ -35,8 +35,8 @@ class Task extends ActiveRecord{
 			//[['begindate', 'enddate'], 'date', 'message' => '日期格式不合法'],
 			['workload' , 'number', 'min' => 0, 'message' => '请录入数值', 'tooSmall' => '请录入大于0的数值'],
 			['workload' , 'required','message' => '请录入工作量'],
-			//['taskstatus' , 'required','message' => '请选择任务状态'],
-			//['stationname' , 'required','message' => '请选择岗位'],
+			['taskstatus' , 'required','message' => '请选择任务状态'],
+			['stationname' , 'required','message' => '请选择岗位'],
 		];
 	}
 
