@@ -38,6 +38,9 @@ $(document).ready(function() {
         },
         select: function(start, end) {
             var formatStart = start.format();
+            if (!end.hasTime()) {
+                end.subtract(1, 'days');
+            }
             var formatEnd = end.format();
             showProjModal(formatStart,formatEnd);
             //$('#calendar').fullCalendar('unselect');
@@ -54,7 +57,7 @@ $(document).ready(function() {
                 content: function () {
                     return "<div>" +
                             "计划开始时间：" + event.start.format() +
-                        "<br />计划结束时间：" + event.end.format() +
+                        "<br />计划结束时间：" + event.end.subtract(1, 'days').format() +
                         "<br />需求提交人：" + event.chargeusername +
                         "<br />需求PM：" + event.pmusername +
                         "<br />需求类型：" + event.projecttype +
@@ -137,6 +140,9 @@ $(document).ready(function() {
         },
         select: function(start, end,jsEvent,view,resource) {
             var formatStart = start.format();
+            if (!end.hasTime()) {
+                end.subtract(1, 'days');
+            }
             var formatEnd = end.format();
             var username = resource.title;
             var userid= resource.id;
