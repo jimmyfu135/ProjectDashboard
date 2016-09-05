@@ -47,6 +47,10 @@ class SiteController extends Controller
                         'actions' => ['user-list', 'error'],
                         'allow' => true,
                     ],
+                    [
+                        'actions' => ['get-current-department', 'error'],
+                        'allow' => true,
+                    ],
                 ],
             ],
             'verbs' => [
@@ -137,5 +141,12 @@ class SiteController extends Controller
         $departName = $_GET["abuname"];
         $calendarList = User::userListByDepartname($departName);
         return Json::encode($calendarList);
+    }
+
+    public function actionGetCurrentDepartment(){
+        $userid = yii::$app->user->id;
+        $user=new User();
+        $user=User::findIdentity($userid);
+        return $user->departid;
     }
 }

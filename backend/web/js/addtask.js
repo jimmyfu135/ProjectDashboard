@@ -118,7 +118,7 @@ function getSavedData(){
 function Save(taskid){
     var datas="";
     var Rows=$("#reportTable")[0].rows;
-    $.each(Rows, function(i, item) {debugger;
+    $.each(Rows, function(i, item) {
         if (i != 0 && item.cells[0].innerText!="没有找到匹配的记录") {
             datas +=JSON.stringify({
                 "stationname":item.cells[0].innerText,

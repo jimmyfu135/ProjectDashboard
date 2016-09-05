@@ -15,10 +15,10 @@ $this->title = 'My Yii Application';
 ?>
 
 <ul id="navul" class="navfilter">
-    <li class="active">全部</li>
-    <li>上海一组</li>
-    <li>上海二组</li>
-    <li>上海三组</li>
+    <li id="depart0" class="active">全部</li>
+    <li id="depart1">上海一组</li>
+    <li id="depart2">上海二组</li>
+    <li id="depart3">上海三组</li>
 </ul>
 
 <ul class="nav nav-tabs">
