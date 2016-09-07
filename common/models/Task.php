@@ -72,10 +72,8 @@ class Task extends ActiveRecord{
 	}
 
 	public static function getTeamUser($departid){
-		$sql = 'select usernameChn as text,id from user where departid = :departid';
-		$teamuser = User::findBySql($sql)->addParams([
-			':departid' => $departid
-		])->asArray()->all();
+		$sql = 'select usernameChn as text,id from user where stationid =3 or stationid=4 order by departid ';
+		$teamuser = User::findBySql($sql)->asArray()->all();
 		return yii\helpers\Json::encode($teamuser);
 	}
 

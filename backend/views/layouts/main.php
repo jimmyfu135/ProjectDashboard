@@ -10,6 +10,8 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 
+$this->registerJsFile('@web/js/bootbox.js');
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -77,3 +79,7 @@ AppAsset::register($this);
 </body>
 </html>
 <?php $this->endPage() ?>
+
+<!--bootbox.prompt("确认删除", function (result) {-->
+<!--var strResult = result;-->
+<!--})-->
