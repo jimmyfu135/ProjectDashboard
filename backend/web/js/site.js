@@ -181,6 +181,10 @@ $(document).ready(function() {
         }
     });
     if(sCurrentDepartment=="1" || sCurrentDepartment=="2" || sCurrentDepartment=="3"){
+        //$("#depart"+sCurrentDepartment).addClass("active");
         $("#depart"+sCurrentDepartment).trigger("click");
+    }else {
+        $("#depart0").trigger("click");
     }
+
 });

@@ -4,18 +4,17 @@
 use backend\assets\AppAsset;
 use yii\bootstrap\Modal;
 //FullCalendarAsset::register($this);
-
+AppAsset::addMultipleSelect($this,'@web/js/multiplescript.js','@web/css/multipleselect.css');
 $this->registerJsFile('@web/js/site.js',['depends' => ['backend\assets\FullCalendarAsset']]);
 $this->registerJsFile('@web/fullcalendar/scheduler.js',['depends' => ['backend\assets\FullCalendarAsset']]);
 $this->registerCssFile('@web/fullcalendar/scheduler.css',['depends' => ['backend\assets\FullCalendarAsset']]);
-AppAsset::addMultipleSelect($this,'@web/js/multiplescript.js','@web/css/multipleselect.css');
 $this->registerJsFile('@web/js/projectplan.js',['depends' => ['backend\assets\AppAsset']]);
 $this->registerJsFile('@web/js/taskproject.js',['depends' => ['backend\assets\AppAsset']]);
 $this->title = 'My Yii Application';
 ?>
 
 <ul id="navul" class="navfilter">
-    <li id="depart0" class="active">全部</li>
+    <li id="depart0">全部</li>
     <li id="depart1">上海一组</li>
     <li id="depart2">上海二组</li>
     <li id="depart3">上海三组</li>
