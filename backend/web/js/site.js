@@ -60,15 +60,15 @@ $(document).ready(function() {
                         "<br />计划结束时间：" + event.end.subtract(1, 'days').format() +
                         "<br />需求提交人：" + event.chargeusername +
                         "<br />需求PM：" + event.pmusername +
-                        "<br />需求类型：" + event.projecttype +
+                        "<br />需求类型：" + event.projecttypechn +
                         "<br />预计工作量：" + event.workload +
-                        "<br />需求级别：" + event.projectlevel +
+                        "<br />需求级别：" + event.projectlevelchn +
                         "<br /><input type='hidden' value='" + event.id + "' />" +
                         "</div>" +
                     "<div style='text-align: right;margin-top: 10px;'>" +
                     "<button type='button' onclick='designProj(event);' class='btn btn-primary btn-xs'>指派</button>" +
                     "<button style='margin-left: 8px;' onclick='editProj(event);' type='button' class='btn btn-default btn-xs'>编辑</button>" +
-                    "<button style='margin-left: 8px;' onclick='delProj(event);' type='button' class='btn btn-default btn-xs'>删除</button>" +
+                    // "<button style='margin-left: 8px;' onclick='delProj(event);' type='button' class='btn btn-default btn-xs'>删除</button>" +
                     "</div>";
                 },
                 container:'body'
