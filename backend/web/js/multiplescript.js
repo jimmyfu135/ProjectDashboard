@@ -14,18 +14,22 @@ $(document).ready(function(){
 	$('#abuChoose').change(function () {
 		var  value= $("#abuChoose option:selected").text();
 		if(value!='全部'){
-			$("#sybChoose").get(0).options[0].selected = true
+			$("#sybChoose").get(0).options[0].selected = true;
 		}
-		var result={Type:"ABU",Value:value}
-		return result;
+		//重新获取所有事件数据
+		$('#requirementCalendar').fullCalendar('refetchEvents');
+		$('#resourceCalendar').fullCalendar('refetchResources');
+		$('#resourceCalendar').fullCalendar('refetchEvents');
 	})
 	$('#sybChoose').change(function () {
 		var  value= $("#sybChoose option:selected").text();
 		if(value!='全部'){
-			$("#abuChoose").get(0).options[0].selected = true
+			$("#abuChoose").get(0).options[0].selected = true;
 		}
-		var result={Type:"SYB",Value:value}
-		return result;
+		//重新获取所有事件数据
+		$('#requirementCalendar').fullCalendar('refetchEvents');
+		$('#resourceCalendar').fullCalendar('refetchResources');
+		$('#resourceCalendar').fullCalendar('refetchEvents');
 	})
 	//默认选中
 	var sCurrentDepartment="0";

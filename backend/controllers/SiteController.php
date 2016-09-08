@@ -115,8 +115,10 @@ class SiteController extends Controller
             ],
         ];*/
         //获取组的参数
+        $filtertype = $_GET["filtertype"];
         $departName = $_GET["abuname"];
-        $calendarList = Projectplan::requirementCalendarList($departName);
+        $careername = $_GET["careername"];
+        $calendarList = Projectplan::requirementCalendarList($filtertype,$departName,$careername);
         return Json::encode($calendarList);
     }
 

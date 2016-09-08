@@ -62,23 +62,32 @@ class Projectplan extends ActiveRecord{
      * $param string $departName abu名称
      * return array 需求列表
      * */
-    public static function requirementCalendarList($departName)
+    public static function requirementCalendarList($filtertype,$departName,$careername)
     {
         //return Projectplan::find()->all();
         $sql = "";
-        if ($departName == "全部") {
-            $sql = 'select id,`title`, date_format(`begindate`,\'%Y-%m-%d\') as `start`,date_format(`enddate`,\'%Y-%m-%d\') as `end`
- ,`subject`,chargeusername,pmusername,projecttype,workload,projectlevel
- ,case projectlevel WHEN 1 then \'已回款\' when 1 then \'已签约未回款\' when 3 then \'未签约先投入\' ELSE \'其它\' end as projectlevelchn
- ,case projecttype when 1 then \'零星需求\' when 2 then \'专项批次\' ELSE \'其它\' END as projecttypechn
-from v_projectplan';
-        } else {
+        if ($filtertype == "abu") {
             $sql = 'select id,`title`, date_format(`begindate`,\'%Y-%m-%d\') as `start`,date_format(`enddate`,\'%Y-%m-%d\') as `end`
  ,`subject`,chargeusername,pmusername,projecttype,workload,projectlevel
  ,case projectlevel WHEN 1 then \'已回款\' when 1 then \'已签约未回款\' when 3 then \'未签约先投入\' ELSE \'其它\' end as projectlevelchn
  ,case projecttype when 1 then \'零星需求\' when 2 then \'专项批次\' ELSE \'其它\' END as projecttypechn
 from v_projectplan where departname = :departname';
+            return Projectplan::findBySql($sql)->addParams([':departname' => $departName])->asArray()->all();
+        } else if($filtertype == "career") {
+            $sql = 'select id,`title`, date_format(`begindate`,\'%Y-%m-%d\') as `start`,date_format(`enddate`,\'%Y-%m-%d\') as `end`
+ ,`subject`,chargeusername,pmusername,projecttype,workload,projectlevel
+ ,case projectlevel WHEN 1 then \'已回款\' when 1 then \'已签约未回款\' when 3 then \'未签约先投入\' ELSE \'其它\' end as projectlevelchn
+ ,case projecttype when 1 then \'零星需求\' when 2 then \'专项批次\' ELSE \'其它\' END as projecttypechn
+from v_projectplan where careername = :careername';
+            return Projectplan::findBySql($sql)->addParams([':careername' => $careername])->asArray()->all();
+        }else{
+            $sql = 'select id,`title`, date_format(`begindate`,\'%Y-%m-%d\') as `start`,date_format(`enddate`,\'%Y-%m-%d\') as `end`
+ ,`subject`,chargeusername,pmusername,projecttype,workload,projectlevel
+ ,case projectlevel WHEN 1 then \'已回款\' when 1 then \'已签约未回款\' when 3 then \'未签约先投入\' ELSE \'其它\' end as projectlevelchn
+ ,case projecttype when 1 then \'零星需求\' when 2 then \'专项批次\' ELSE \'其它\' END as projecttypechn
+from v_projectplan';
+            return Projectplan::findBySql($sql)->asArray()->all();
         }
-        return Projectplan::findBySql($sql)->addParams([':departname' => $departName])->asArray()->all();
+        //return Projectplan::findBySql($sql)->addParams([':departname' => $departName,':careername' => $careername])->asArray()->all();
     }
 }

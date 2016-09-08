@@ -20,16 +20,18 @@ $(document).ready(function() {
         selectHelper: true,
         //events: 'index.php?r=site/calendar-list',
         events:function (start,end,timezone,callback) {
-            var abuName = "";
-            $("#navul li").each(function () {
-                if($(this).hasClass("active")){
-                    abuName = $(this).text();
-                    return false;
-                }
-            });
+            var filterType = "all";
+            var abuName = $("#abuChoose option:selected").text();
+            var careerName = $("#sybChoose option:selected").text();
+            if (abuName == '全部' && careerName != '全部')
+                filterType = "career";
+            else if(abuName != '全部' && careerName == '全部')
+                filterType = "abu";
+            else
+                filterType = "all";
             $.ajax({
-                url:'index.php?r=site/requirement-calendar-list&abuname=' + abuName,
-                success:function (data) {
+                url: 'index.php?r=site/requirement-calendar-list&filtertype='+filterType+'&abuname=' + abuName + '&careername=' + careerName,
+                success: function (data) {
                     var events = [];
                     events = JSON.parse(data);
                     callback(events);
@@ -105,13 +107,7 @@ $(document).ready(function() {
         resourceLabelText: '团队',
         resourceGroupField: 'stationname',
         resources: function (callback) {
-            var abuName = "";
-            $("#navul li").each(function () {
-                if($(this).hasClass("active")){
-                    abuName = $(this).text();
-                    return false;
-                }
-            });
+            var abuName = $("#abuChoose option:selected").text();
             $.ajax({
                 url:'index.php?r=site/user-list&abuname=' + abuName,
                 success:function (data) {
@@ -122,13 +118,7 @@ $(document).ready(function() {
             });
         },
         events: function (start,end,timezone,callback) {
-            var abuName = "";
-            $("#navul li").each(function () {
-                if($(this).hasClass("active")){
-                    abuName = $(this).text();
-                    return false;
-                }
-            });
+            var abuName = $("#abuChoose option:selected").text();
             $.ajax({
                 url:'index.php?r=site/task-calendar-list&abuname=' + abuName,
                 success:function (data) {
