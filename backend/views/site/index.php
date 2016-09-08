@@ -9,7 +9,6 @@ $this->registerJsFile('@web/js/site.js',['depends' => ['backend\assets\FullCalen
 $this->registerJsFile('@web/fullcalendar/scheduler.js',['depends' => ['backend\assets\FullCalendarAsset']]);
 $this->registerCssFile('@web/fullcalendar/scheduler.css',['depends' => ['backend\assets\FullCalendarAsset']]);
 $this->registerJsFile('@web/js/projectplan.js',['depends' => ['backend\assets\AppAsset']]);
-$this->registerCssFile('@web/css/site.css');
 $this->registerJsFile('@web/js/taskproject.js',['depends' => ['backend\assets\AppAsset']]);
 $this->title = 'My Yii Application';
 ?>
