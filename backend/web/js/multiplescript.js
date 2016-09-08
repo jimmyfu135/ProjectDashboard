@@ -11,6 +11,22 @@ $(document).ready(function(){
 		$('#resourceCalendar').fullCalendar('refetchEvents');
 	});
 
+	$('#abuChoose').change(function () {
+		var  value= $("#abuChoose option:selected").text();
+		if(value!='全部'){
+			$("#sybChoose").get(0).options[0].selected = true
+		}
+		var result={Type:"ABU",Value:value}
+		return result;
+	})
+	$('#sybChoose').change(function () {
+		var  value= $("#sybChoose option:selected").text();
+		if(value!='全部'){
+			$("#abuChoose").get(0).options[0].selected = true
+		}
+		var result={Type:"SYB",Value:value}
+		return result;
+	})
 	//默认选中
 	var sCurrentDepartment="0";
 	$.ajax({

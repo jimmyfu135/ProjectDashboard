@@ -134,7 +134,7 @@ $(document).ready(function() {
                 success:function (data) {
                     var events = [];
                     events = JSON.parse(data);
-                    callback(events);
+                    callback(events);   
                 }
             });
         },
@@ -157,6 +157,8 @@ $(document).ready(function() {
     //由于日历无法在隐藏的div中加载，所以在显示的时候加载一次
     var resourceCalendarIsloaded = false;
     $("#navResource").on('shown.bs.tab',function(e) {
+        $('#sybChoose').hide();
+        $('#sybFont').hide();
         if(!resourceCalendarIsloaded){
             //console.log("加载了111");
             $("#resourceCalendar").fullCalendar('render');
@@ -167,6 +169,8 @@ $(document).ready(function() {
     });
 
     $("#navRequirement").on('shown.bs.tab',function(e) {
+        $('#sybChoose').show();
+        $('#sybFont').show();
         $('#requirementCalendar').fullCalendar('refetchEvents');
     });
     

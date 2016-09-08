@@ -132,3 +132,4 @@ function  delProj(event) {
 	submitDelProjPlan(pid);
 	closePopover(id);
 }
+
